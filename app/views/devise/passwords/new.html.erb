@@ -3,7 +3,7 @@
 <% end %>
 
 <div class="row">
-    <div class="span4 offset4 well">
+    <div class="login-box">
       <legend><%= I18n.t('devise.passwords.new.heading') %></legend>
       <%= render :partial => 'layouts/common/flashes' %>
 
@@ -14,7 +14,7 @@
         :placeholder => I18n.t('activerecord.attributes.player.email') 
         %>
 
-        <%= f.submit I18n.t('devise.passwords.new.submit_button'), :class => 'span12 btn btn-primary btn-block' %>
+        <%= f.submit I18n.t('devise.passwords.new.submit_button'), :class => 'span12 btn btn-large btn-block' %>
       <% end %>
     </div>
 </div>

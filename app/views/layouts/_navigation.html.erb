@@ -1,28 +1,29 @@
 <div class="navbar navbar-inverse">
 	<div class="navbar-inner">
-		<div class="container-fluid">
-			<%= player_navigation %>
-			<%= anonymous_navigation %>
-
-			<div class="pull-right">
-				<ul class='nav'>
-					<li class="dropdown">
-						<%= link_to '#', :"data-toggle" => 'dropdown' do %>
-						<%= I18n.t('navbar.links.language') %>
-						<b class="caret"></b>
-						<% end %>
-
-						<ul class="dropdown-menu">
-							<% I18n.available_locales.each do |locale| %>
-								<li class=<%= I18n.locale == locale ? 'active' : 'inactive'%>>
-									<%= link_to locale.to_s.upcase, {:locale => locale.to_s} %>
-								</li>
-							<% end %>
-						</ul>
-					</li>
-				</ul>
+		<div class="container-fixer"> 
 				<%= link_to I18n.t('brand.title'), root_url, :class => 'latter brand' %>
-			</div>
+
+				<%= player_navigation %>
+
+				<div class="pull-right">
+					<ul class='nav'>
+						<li class="dropdown">
+							<%= link_to '#', :"data-toggle" => 'dropdown' do %>
+							<%= I18n.t('navbar.links.language') %>
+							<b class="caret"></b>
+							<% end %>
+
+							<ul class="dropdown-menu">
+								<% I18n.available_locales.each do |locale| %>
+									<li class=<%= I18n.locale == locale ? 'active' : 'inactive'%>>
+										<%= link_to locale.to_s.upcase, {:locale => locale.to_s} %>
+									</li>
+								<% end %>
+							</ul>
+						</li>
+					</ul>
+					<%= anonymous_navigation %>
+				</div>
 		</div>
 	</div>
 </div>
