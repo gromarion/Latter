@@ -43,6 +43,8 @@ gem 'jquery-rails'
 gem "sass-rails"
 gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'font-awesome-rails'
+gem 'omniauth-google-oauth2'
+gem 'faraday'
 
 
 group :development, :test do

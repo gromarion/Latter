@@ -16,10 +16,11 @@ class Player < ActiveRecord::Base
 
   has_gravatar
   devise :database_authenticatable,
-         :confirmable,
          :recoverable,
          :trackable,
          :validatable
+  
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   before_validation :set_default_password, :on => :create
   before_save :ensure_authentication_token
@@ -35,6 +36,23 @@ class Player < ActiveRecord::Base
 
   has_many :awards, :dependent => :destroy
   has_many :badges, :through => :awards
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
+      player.email = auth.info.email
+      player.encrypted_password = Devise.friendly_token[0,20]
+      player.name = auth.info.name   # assuming the player model has a name
+    end
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |player|
+      binding.pry
+      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
+        player.email = data['email'] if player.email.blank?
+      end
+    end
+  end
 
   # Public - Return all games that a player has participated in
   #

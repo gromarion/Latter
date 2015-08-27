@@ -28,15 +28,14 @@ class ApplicationController < ActionController::Base
   # - If they have not, it logs them out and redirects them to the change
   #   password page.
   def needs_password?
-    if current_player and !current_player.changed_password?
-      old_current_player = current_player
-      sign_out :player
-      reset_token = old_current_player.send(:set_reset_password_token)
+    # if current_player and !current_player.changed_password?
+    #   old_current_player = current_player
+    #   sign_out :player
+    #   reset_token = old_current_player.send(:set_reset_password_token)
 
-      redirect_to edit_player_password_path(:reset_password_token => reset_token)
-      return false
-    else
-      return true
-    end
+    #   redirect_to edit_player_password_path(:reset_password_token => reset_token)
+    #   return false
+    # else
+    true
   end
 end

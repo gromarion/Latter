@@ -24,5 +24,6 @@
 
   <h5>Have an account?</h5>
   <p class="clearfix"></p>
-  <%= link_to 'Login', new_player_session_path, :class => 'btn btn-large btn-info' %>
+  <%= link_to 'Login', new_player_session_path, class: 'btn btn-large btn-info' %>
+  <%= link_to 'Sign in with Google', player_omniauth_authorize_path(:google_oauth2) %>
 </div>

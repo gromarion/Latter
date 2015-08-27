@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122220931) do
+ActiveRecord::Schema.define(version: 20150827120021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type"
     t.integer  "owner_id"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140122220931) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
-  create_table "alerts", force: true do |t|
+  create_table "alerts", force: :cascade do |t|
     t.string   "title"
     t.text     "message",                      null: false
     t.datetime "expire_at"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140122220931) do
     t.string   "category",    default: "info", null: false
   end
 
-  create_table "awards", force: true do |t|
+  create_table "awards", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "badge_id"
     t.datetime "created_at"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20140122220931) do
     t.datetime "expiry"
   end
 
-  create_table "badges", force: true do |t|
+  create_table "badges", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.string   "image_url"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20140122220931) do
     t.integer  "expire_in_days",   default: 0
   end
 
-  create_table "games", force: true do |t|
+  create_table "games", force: :cascade do |t|
     t.integer  "challenger_id",                            null: false
     t.integer  "challenged_id",                            null: false
     t.boolean  "complete",                 default: false, null: false
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20140122220931) do
   add_index "games", ["challenger_id"], name: "index_games_on_challenger_id", using: :btree
   add_index "games", ["complete"], name: "index_games_on_complete", using: :btree
 
-  create_table "players", force: true do |t|
+  create_table "players", force: :cascade do |t|
     t.string   "email",                                   default: "",    null: false
     t.string   "encrypted_password",                      default: "",    null: false
     t.string   "reset_password_token"
@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(version: 20140122220931) do
     t.boolean  "wants_challenge_completed_notifications", default: true,  null: false
     t.boolean  "active",                                  default: true,  null: false
     t.string   "authentication_token",                    default: "",    null: false
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "players", ["active"], name: "index_players_on_active", using: :btree

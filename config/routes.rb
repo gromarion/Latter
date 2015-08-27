@@ -1,5 +1,5 @@
 Latter::Application.routes.draw do
-  devise_for :players
+  devise_for :players, :controllers => { :omniauth_callbacks => "players/omniauth_callbacks" }
 
   resources :games, :except => [:edit, :update] do
     post :complete, :on => :member
