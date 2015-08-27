@@ -13,7 +13,7 @@ body {
 .navbar-inner {
   background: $dark-violete !important;
   border-radius: 0;
-  padding: 0;
+  padding: 0 8px;
 }
 
 .btn{
@@ -38,8 +38,18 @@ body {
   body {
       padding: 0;
   }
+  .container-fixer{
+    padding: 0 !important;
+  }
   .nav.language-selector{
     display: none;
+  }
+  .sidebar .profile, 
+  .sidebar .about{
+    margin-top: -20px;
+    border: 0 !important;
+    margin-bottom: 30px !important;
+    box-shadow: none !important;
   }
 }
 
@@ -49,9 +59,29 @@ h1, h2, h3, h4, h5 {
     margin: 0;
 }
 
+.header{
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding-left: 101px;
+  margin-bottom: 30px;
+
+  img{
+    float: left;
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    height: 61px;
+  }
+  h3{ float: left;}
+}
+
+div#players {
+    padding: 0 4%;
+}
+
 .empty-state-players{
-  max-width: 330px;
   margin: 0 auto;
+  padding: 0 40px 0 102px;
 
   h3.alert-heading {
     font-size: 19px;
@@ -121,7 +151,7 @@ a.latter.brand {
     border: 3px solid #fff;
     line-height: 1.4em;
     font-size: 0.8em;
-    padding: 2% 8%;
+    padding: 2% 8% 4%;
     background: lighten($dark-violete, 65%);
     box-shadow: 0 0 4px #eee;
 
@@ -150,5 +180,9 @@ a.latter.brand {
   }
 }
 
+.footer{
+    background: #EDECF3;
+    padding-top: 6px;
+}
 
 

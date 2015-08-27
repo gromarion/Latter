@@ -16,7 +16,7 @@ $link-orange: #F1AB2E;
 
 .player {
   margin-bottom: 2%;
-  padding: 1%;
+  padding: 0;
   width: 98%;
   border-radius: 5px;
   position:relative;
@@ -62,8 +62,8 @@ $link-orange: #F1AB2E;
       background: image-url('placeholder-avatar.png') no-repeat white;
       border-radius: 110px;
       overflow: hidden;
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       background-position: 4px;
       background-size: 92%;
 
