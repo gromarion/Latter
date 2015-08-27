@@ -18,11 +18,7 @@
         </li>
 
         <li>
-          <%= link_to I18n.t('navbar.links.edit_account'), edit_player_url(current_player) %>
-        </li>
-
-        <li>
-          <%= link_to I18n.t('navbar.links.new_player'), new_player_url %>
+          <%= link_to I18n.t('navbar.links.edit_account'), edit_player_url(current_user) %>
         </li>
       </ul>
     </li>
@@ -44,7 +40,7 @@
     </li>
 
     <li>
-    <%= link_to I18n.t('navbar.links.log_out'), destroy_player_session_path, :method => :delete %>
+    <%= link_to I18n.t('navbar.links.log_out'), delete_oauth_path(provider: 'google') %>
     </li>
   </ul>
 </div>

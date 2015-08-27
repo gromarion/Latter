@@ -20,8 +20,8 @@ gem 'elo'
 # Helper functions for rendering Gravatars
 gem 'gravtastic'
 
-# Perform authentication with Devise
-gem 'devise'
+# Perform authentication with Sorcery
+gem 'sorcery'
 
 # Use Kaminari for pagination (only for games listing)
 gem 'kaminari'
@@ -45,6 +45,9 @@ gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'font-awesome-rails'
 gem 'omniauth-google-oauth2'
 gem 'faraday'
+gem 'pry'
+gem 'active_record_store'
+gem 'activerecord-session_store'
 
 
 group :development, :test do

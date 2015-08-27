@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827120021) do
+ActiveRecord::Schema.define(version: 20150827175017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20150827120021) do
     t.datetime "expire_at"
     t.datetime "activate_at",                  null: false
     t.string   "category",    default: "info", null: false
+  end
+
+  create_table "authentications", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "provider",   null: false
+    t.string   "uid",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "awards", force: :cascade do |t|
@@ -91,7 +99,7 @@ ActiveRecord::Schema.define(version: 20150827120021) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "name",                                                    null: false
+    t.string   "first_name",                                              null: false
     t.integer  "rating",                                  default: 1000,  null: false
     t.boolean  "pro",                                     default: false, null: false
     t.boolean  "starter",                                 default: true,  null: false
@@ -106,6 +114,7 @@ ActiveRecord::Schema.define(version: 20150827120021) do
     t.string   "authentication_token",                    default: "",    null: false
     t.string   "provider"
     t.string   "uid"
+    t.string   "last_name"
   end
 
   add_index "players", ["active"], name: "index_players_on_active", using: :btree

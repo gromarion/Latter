@@ -5,11 +5,11 @@ module ApplicationHelper
   end
 
   def player_navigation
-    render(:partial => 'layouts/navigation/player_navigation') if current_player
+    render(:partial => 'layouts/navigation/player_navigation') if current_user
   end
 
   def anonymous_navigation
-    render(:partial => 'layouts/navigation/anonymous_navigation') unless current_player
+    render(:partial => 'layouts/navigation/anonymous_navigation') unless current_user
   end
 
   def render_alerts

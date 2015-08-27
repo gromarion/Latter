@@ -41,7 +41,7 @@ module PlayersHelper
   end
 
   def link_to_primary_action_for(player)
-    if current_player == player
+    if current_user == player
       link_to edit_player_path(player), :class => 'btn btn-large' do
         content_tag(:i, '', :class => 'icon-user') +\
           I18n.t('player.edit.link')

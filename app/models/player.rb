@@ -15,17 +15,8 @@ class Player < ActiveRecord::Base
   default_scope { where(:active => true) }
 
   has_gravatar
-  devise :database_authenticatable,
-         :recoverable,
-         :trackable,
-         :validatable
-  
-  devise :omniauthable, omniauth_providers: [:google_oauth2]
 
-  before_validation :set_default_password, :on => :create
-  before_save :ensure_authentication_token
-
-  validates_presence_of :name, :allow_blank => false
+  validates_presence_of :first_name, :allow_blank => false
   validates_numericality_of :rating, :minimum => 0
   validates_inclusion_of :pro, :starter, :in => [true, false, nil]
   validates_inclusion_of :active, :in => [true, false]
@@ -37,21 +28,15 @@ class Player < ActiveRecord::Base
   has_many :awards, :dependent => :destroy
   has_many :badges, :through => :awards
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
-      player.email = auth.info.email
-      player.encrypted_password = Devise.friendly_token[0,20]
-      player.name = auth.info.name   # assuming the player model has a name
-    end
+  authenticates_with_sorcery! do |config|
+    config.authentications_class = Authentication
   end
 
-  def self.new_with_session(params, session)
-    super.tap do |player|
-      binding.pry
-      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
-        player.email = data['email'] if player.email.blank?
-      end
-    end
+  has_many :authentications, dependent: :destroy
+  accepts_nested_attributes_for :authentications
+
+  def has_linked_gmail?
+    authentications.where(provider: 'google').present?
   end
 
   # Public - Return all games that a player has participated in
@@ -76,22 +61,6 @@ class Player < ActiveRecord::Base
   def ranking
     Player.order('rating DESC').select(:id).map(&:id).index(self.id) + 1
   end
-
-  # Public - A hook called by devise after a password reset
-  #
-  # We use this method to update our own password_changed? boolean
-  # if the record is not new (i.e. someone hasn't just registered or something),
-  # and the encrypted_password field has changed. We then delegate the action
-  # up to super.
-  #
-  def after_password_reset
-    if !self.new_record? and self.encrypted_password_changed?
-      self.changed_password = true
-    end
-
-    super
-  end
-
 
   # Public - Calculate whether this player is a rookie
   #
@@ -213,38 +182,6 @@ class Player < ActiveRecord::Base
     super(options)
   end
 
-  def ensure_authentication_token
-    if authentication_token.blank?
-      self.authentication_token = generate_authentication_token
-    end
-  end
-
-  private
-
-  def generate_authentication_token
-    loop do
-      token = Devise.friendly_token
-      break token unless Player.exists?(authentication_token: token)
-    end
-  end
-
-
-
-  # Private - Set a default password for the user
-  #
-  # Because only existing players can add new players, we want to
-  # avoid the situation where a player adds a new player, and then has to
-  # think up a password, enter it, and then say "your password is x".
-  #
-  # Instead, we set a default secure password to the account, and then
-  # get them to set their password the first time they log in
-  # (see ApplicationController)
-  def set_default_password
-    Devise.friendly_token[0..20].tap do |pass|
-      self.password = pass
-      self.password_confirmation = pass
-    end
-  end
 
   # Private - Update player ratings based on the result
   # of a game
