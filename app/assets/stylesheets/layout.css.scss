@@ -38,14 +38,40 @@ body {
   body {
       padding: 0;
   }
+  .nav.language-selector{
+    display: none;
+  }
 }
 
 /* own style */
 
+h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+.empty-state-players{
+  max-width: 330px;
+  margin: 0 auto;
+
+  h3.alert-heading {
+    font-size: 19px;
+    margin: 0;
+  }
+  p {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  img{
+    margin: 36px auto;
+    display: inherit;  
+  }
+}
 .container-fixer {
   padding: 0 20px;
   margin: auto;
   max-width: 900px;
+  color: $dark-violete;
 }
 
 .login-box{
@@ -61,12 +87,18 @@ input[type="text"] {
   border: 0;
   height: 43px;
   box-shadow: none;
+
+  &:focus {
+    border: 1px solid $link-orange;
+    background:lighten($link-orange, 40%);
+    box-shadow: none;
+  }
 }
 
 a.latter.brand {
   background: image-url('logo-chico.png') no-repeat;
   float: left;
-  margin: 5px 0;
+  margin: 7px 0 5px;
   display: block;
   font-weight: bold;
   color: white;
@@ -76,19 +108,29 @@ a.latter.brand {
   text-indent: -99999px;
 }
 
-.ranking {
-  display: block;
-  padding: 15%;
-  font-size: 200%;
-  text-align: center;
-}
-
+/*
 .sidebar .profile,
 .sidebar .about {
   color: #5D5B5B;
   padding: 5% 0;
 }
+*/
+.sidebar .profile, 
+.sidebar .about {
+    color: #3D385C;
+    border: 3px solid #fff;
+    line-height: 1.4em;
+    font-size: 0.8em;
+    padding: 2% 8%;
+    background: lighten($dark-violete, 65%);
+    box-shadow: 0 0 4px #eee;
 
+    h3{
+      font-size: 20px;
+      border-bottom: 1px solid #d6d3e5;
+      margin-bottom: 15px;
+    }
+}
 .about {
   a {
     color: $link-orange;
@@ -102,10 +144,9 @@ a.latter.brand {
   }
 
   a.btn {
-    min-width: 38%;
     color: #ffffff;
     margin: 3px auto;
-    border-bottom: inherit;
+    border-bottom: 0;
   }
 }
 

@@ -1,6 +1,36 @@
-<div class="alert alert-info">
+<div class="empty-state-players">
 	<h3 class="alert-heading"><%= I18n.t('player.none.heading') %></h3>
-	<p>
-		<%= I18n.t('player.none.message') %>
-	</p>
+	<p><%= I18n.t('player.none.message') %></p>
+	<%= image_tag 'ranking-empty.png'%>
+</div>
+
+
+<div id="players">
+	<div class="row-fluid player" id="player_8" data-rating="1080">
+	    <div class="pull-left">
+			<div class="ranking_display">
+				<div class="label label-important ranking">1</div>
+			</div>
+			<div class="thumbnail">
+				<img alt="95fb9587b379bee58eb0cb1eb96d5974" src="https://secure.gravatar.com/avatar/95fb9587b379bee58eb0cb1eb96d5974.png?r=PG&amp;s=200">
+			</div>
+	    </div>
+
+	    <div class="pull-left">
+	      <h3>Ezequiel erbaro</h3>
+
+	      <div class="row-fluid data_and_actions">
+	        <div class="span5 controls">
+	          
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="pull-right level-box">
+	    	<div clas="badge-container"><%= image_tag 'badge-respect.png'%></div>
+	    	<div class="points_display">
+	          <label>Points: 1080</label>
+	        </div>
+	    </div>
+	</div>
 </div>
