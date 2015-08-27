@@ -19,17 +19,16 @@
     <%#= favicon_link_tag %>
   </head>
   <body>
-
-    <div class="container">
-      <%= render 'layouts/navigation' %>
+    <%= render 'layouts/navigation' %>
+    <div class="container-fixer">
       <div class="content">
         <% if content_for?(:sidebar) %>
           <div class="row-fluid">
-            <div class="span3 sidebar">
+            <div class="span4 sidebar">
               <%= content_for :sidebar %>
             </div>
 
-            <div class="span9">
+            <div class="span8">
         <% else %>
           <div class="row-fluid">
             <div class="span12">

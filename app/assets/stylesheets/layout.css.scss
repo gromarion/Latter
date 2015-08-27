@@ -1,12 +1,79 @@
+/* colors */
+
+$dark-violete: #3D385C;
+$call-to-action: #F24F36;
+$link-orange: #F1AB2E;
+
+/* bootstrap overrides */
+
+body {
+    padding-top: 0;
+}
+
+.navbar-inner {
+  background: $dark-violete !important;
+  border-radius: 0;
+  padding: 0;
+}
+
+.btn{
+  background: $call-to-action;
+  border: 0;
+  text-shadow: none;
+  color: #fff;
+  
+  &:hover{
+      color:#fff;
+      background:darken($call-to-action, 10%) !important;
+  }
+
+  &.login{ float: right;}
+}
+.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+    color: #FFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 767px){
+  body {
+      padding: 0;
+  }
+}
+
+/* own style */
+
+.container-fixer {
+  padding: 0 20px;
+  margin: auto;
+  max-width: 900px;
+}
+
+.login-box{
+  padding: 4%;
+  max-width: 600px;
+  margin: auto;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  background-color: #eee;
+  border: 0;
+  height: 43px;
+  box-shadow: none;
+}
+
 a.latter.brand {
-  padding-right: 0;
-  padding-left: 70px;
-  margin-left: 20px;
-  float: right;
+  background: image-url('logo-chico.png') no-repeat;
+  float: left;
+  margin: 5px 0;
+  display: block;
   font-weight: bold;
   color: white;
-  background-image: image-url('latter.png');
-  background-repeat: no-repeat;
+  width: 133px;
+  height: 10px;
+  background-size: contain;
+  text-indent: -99999px;
 }
 
 .ranking {
@@ -18,23 +85,26 @@ a.latter.brand {
 
 .sidebar .profile,
 .sidebar .about {
-  background-color: #333;
-  color: #fff;
-  border-radius: 10px;
-  padding: 10%;
+  color: #5D5B5B;
+  padding: 5% 0;
 }
 
 .about {
   a {
-    color: whiteSmoke;
+    color: $link-orange;
     line-height: 150%;
-    border-bottom: dotted 1px whiteSmoke;
+    border-bottom: dotted 1px #FFDCAF;
     text-decoration: none;
+
+    &:hover{
+      background:lighten($link-orange, 30%);
+    }
   }
 
   a.btn {
-    width: 80%;
-    margin: auto;
+    min-width: 38%;
+    color: #ffffff;
+    margin: 3px auto;
     border-bottom: inherit;
   }
 }
