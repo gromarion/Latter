@@ -30,6 +30,7 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.json
   def show
+  
     @player = Player.find(params[:id])
 
     respond_to do |format|
@@ -76,7 +77,8 @@ class PlayersController < ApplicationController
     @player = current_player
 
     respond_to do |format|
-      if @player.update_with_password(player_params)
+      
+      if @player.update_attributes(player_params)
         format.html { redirect_to Player, notice: I18n.t('player.update.success') }
         format.json { head :no_content }
       else
@@ -91,8 +93,6 @@ class PlayersController < ApplicationController
     def player_params
       params.require(:player).permit(
         :email,
-        :password,
-        :password_confirmation,
         :wants_challenge_completed_notifications,
         :name
       )

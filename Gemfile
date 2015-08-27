@@ -45,6 +45,7 @@ gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'font-awesome-rails'
 gem 'omniauth-google-oauth2'
 gem 'faraday'
+gem 'pry'
 
 
 group :development, :test do
