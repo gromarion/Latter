@@ -1,12 +1,14 @@
 <% cache player do %>
   <div class="row-fluid player" id="<%= dom_id(player) %>" data-rating="<%= player.rating %>">
-    <div class="span2">
+    <div class="pull-left">
+      <div class="ranking_display"><%= ranking(player) %></div>
+
       <div class="thumbnail">
         <%= image_tag image_for(player), size: 200 %>
       </div>
     </div>
 
-    <div class="span10">
+    <div class="pull-left">
       <h3><%= player.name %></h3>
 
       <div class="row-fluid data_and_actions">
@@ -16,10 +18,15 @@
         <div class="span5 controls">
           <%= render partial: 'players/controls', locals: { player: player } %>
         </div>
-        <div class="span2 ranking_display">
-          <%= ranking(player) %>
-        </div>
       </div>
     </div>
+
+    <div class="pull-right level-box">
+      <div clas="badge-container"><%= image_tag 'badge-respect.png'%></div>
+      <div class="points_display">
+          <label>Points: 1080</label>
+        </div>
+    </div>
+
   </div>
 <% end %>

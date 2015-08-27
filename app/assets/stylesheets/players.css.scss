@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+/* colors */
+
+$dark-violete: #3D385C;
+$call-to-action: #F24F36;
+$link-orange: #F1AB2E;
+
+
 .player_sign_in {
   max-width: 240px;
   margin: auto;
@@ -12,9 +19,55 @@
   padding: 1%;
   width: 98%;
   border-radius: 5px;
+  position:relative;
+  border-bottom: 1px solid #eee;
 
-  &:nth-child(odd) {
-    background-color: #ededed;
+  .level-box{
+    max-width: 87px;
+    color: #797979;
+
+    label{
+      font-size: 12px;
+      text-align: center;
+    }
+  }
+  .ranking_display {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    float: none;
+
+    .ranking{
+      text-align: center;
+      display: inline;
+      position: absolute;
+      line-height: 28px;
+      font-size: 16px;
+      font-weight: 400;
+      top: 0;
+      height: 30px;
+      text-align: center !important;
+      width: 30px;
+      left: 0;
+      padding: 0;
+      border-radius: 35px;
+      background: $dark-violete;
+    }
+    .trend {
+      color: white;
+    }
+  }
+
+  .thumbnail {
+      background: image-url('placeholder-avatar.png') no-repeat white;
+      border-radius: 110px;
+      overflow: hidden;
+      width: 80px;
+      height: 80px;
+      background-position: 4px;
+      background-size: 92%;
+
+      img { border-radius: 80px;}
   }
 
   .data_and_actions {
@@ -34,20 +87,11 @@
     }
   }
 
-
-  .ranking_display {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    float: none;
-
-    .trend {
-      color: white;
-    }
-  }
-
   h3 {
-    line-height: 200%;
+    font-size: 20px;
+    color: #444;
+    font-weight: 400;
+    padding: 23px 0 0 11px;
   }
 }
 
