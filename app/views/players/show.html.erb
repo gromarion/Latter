@@ -1,5 +1,11 @@
-<div class="show_player player">
+<div class="show_player player profile-box">
 	<div>
+		<div class="ranking_display">
+      		<div class="label label-important ranking">
+	        	<%= ranking(@player) %>
+	      	</div>
+	    </div>
+
 		<div class="thumbnail avatar pull-left">
 			<%= image_tag image_for(@player), size: '80', size: '80x80' %>
 		</div> 
@@ -11,6 +17,21 @@
 			<%= @player.email %>
 			<% end %>
 		</div>
+
+		<div class="level-box pull-right">
+	      <div class="badges">
+	        <div>
+				<div clas="badge-container pull-left"><%= image_tag level_image_tag_for(@player) %></div>
+		        <label class="pull-left"><%= I18n.t('player.points', points: @player.rating) %></label>
+		        <label class="pull-left"><%= I18n.t('player.profile.games', count: @player.games.count) %></label>
+	        </div>
+	        
+	        <% if @player.badges.any? %>
+	          <%= render partial: 'badges/player_badge', collection: @player.badges %>
+	        <% end %>
+	      </div>
+	    </div>
+
 
 		<div class="clearfix"></div>
 	</div>

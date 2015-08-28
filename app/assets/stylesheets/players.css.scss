@@ -8,6 +8,22 @@ $dark-violete: #3D385C;
 $call-to-action: #F24F36;
 $link-orange: #F1AB2E;
 
+.profile-box{
+
+  .badges > div,
+  .badges > label{
+    float: left;
+  }
+
+  &.player .level-box{
+    max-width: 680px !important;
+    display: block;
+
+    img{
+      width: 70px;
+    }
+  }
+}
 
 .player_sign_in {
   max-width: 240px;
@@ -32,6 +48,7 @@ $link-orange: #F1AB2E;
 
     label{
       font-size: 12px;
+      padding: 0 7px;
       text-align: center;
     }
   }
@@ -101,6 +118,10 @@ $link-orange: #F1AB2E;
 }
 
 .profile {
+  .badges-prize{
+    margin: 5px;
+    width: 60px;
+  }
   .thumbnail {
     box-shadow: none;
     border: none;
