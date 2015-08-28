@@ -24,9 +24,6 @@
       <div class="content">
         <% if content_for?(:sidebar) %>
           <div class="row-fluid">
-            <div class="span4 sidebar">
-              <%= content_for :sidebar %>
-            </div>
 
             <div class="span8">
         <% else %>
@@ -41,6 +38,9 @@
           <%= render_alerts %>
 
           <%= yield %>
+        </div>
+        <div class="span4 sidebar">
+          <%= content_for :sidebar %>
         </div>
       </div>
       </div><!--/content-->

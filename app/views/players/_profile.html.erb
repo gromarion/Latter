@@ -1,23 +1,43 @@
 <% cache [player, "profile"] do %>
 <div class="profile">
-  <div class="thumbnail">
-    <%= image_tag image_for(player), size: 300, title: player.name %>
-  </div>
 
-  <div class="info">
-
-    <h2><%= player.name %></h2>
-    <%= ranking(player) %>
-
-    <h3><%= I18n.t('player.points', points: player.rating) %></h3>
-    <h3><%= I18n.t('player.profile.games', count: player.games.count) %></h3>
-
-    <div class="badges">
-      <% if player.badges.any? %>
-        <%= render partial: 'badges/player_badge', collection: player.badges %>
-      <% end %>
+  <div class="row-fluid player" id="player_3" data-rating="1033">
+    <div class="avatar-box">
+    <div class="ranking_display">
+      <div class="label label-important ranking">
+        <%= ranking(player) %>
+      </div>
     </div>
+
+      <div class="thumbnail">
+        <%= image_tag image_for(player), size: 300, title: player.name %>
+      </div>
+    </div>
+
+    <div class="user-name-box">
+      <h3><%= player.name %></h3>
+    </div>
+
+    <div class="level-box">
+      <div class="badges">
+        <div clas="badge-container"><img src="/assets/badge-respect.png" alt="Badge respect"></div>
+
+        <label><%= I18n.t('player.points', points: player.rating) %></label>
+        <label><%= I18n.t('player.profile.games', count: player.games.count) %></label>
+        <% if player.badges.any? %>
+          <%= render partial: 'badges/player_badge', collection: player.badges %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row-fluid data_and_actions">
+        <div class="controls">
+          <a class="link" href="/players/3/edit?locale=en"><i class=" "></i>Edit Profile</a>
+        </div>
+    </div>
+
   </div>
+
 </div>
 <% end %>
 

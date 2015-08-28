@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="pull-left">
+    <div class="pull-left user-name-box">
       <h3>
         <%= link_to player do %>
           <%= player.name %>
@@ -16,9 +16,7 @@
       </h3>
 
       <div class="row-fluid data_and_actions">
-        <div class="span5 points_display">
-        </div>
-        <div class="span5 controls">
+        <div class="controls">
           <%= render partial: 'players/controls', locals: { player: player } %>
         </div>
       </div>

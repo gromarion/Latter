@@ -1,7 +1,5 @@
 <% if current_player %>
   <% cache [current_player, player] do %>
-    <div class="btn-group">
     	<%= link_to_primary_action_for(player) %>
-    </div>
   <% end %>
 <% end %>

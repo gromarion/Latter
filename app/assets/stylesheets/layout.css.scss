@@ -15,7 +15,9 @@ body {
   border-radius: 0;
   padding: 0 8px;
 }
-
+.link{
+  color: $link-orange;
+}
 .btn{
   background: $call-to-action;
   border: 0;

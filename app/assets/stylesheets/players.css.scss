@@ -22,6 +22,9 @@ $link-orange: #F1AB2E;
   position:relative;
   border-bottom: 1px solid #eee;
 
+  h3 a{
+    color: #444;
+  }
   .level-box{
     max-width: 87px;
     color: #797979;
@@ -67,31 +70,33 @@ $link-orange: #F1AB2E;
       background-position: 4px;
       background-size: 92%;
 
-      img { border-radius: 80px;}
+      img { 
+        border-radius: 80px;
+        height: 70px;
+      }
   }
 
   .data_and_actions {
     position: relative;
   }
+  .user-name-box{
+    padding: 0 0 0 10px;
 
-  .controls {
-    margin-left: 0;
+    .controls {
+      margin-left: 0;
 
-    .btn {
-      i[class^="icon-"] {
-        padding-right: 5px;
+      .btn {
+        i[class^="icon-"] {
+          padding-right: 5px;
+        }
       }
-
-      width: 39%;
-      font-size: 14px;
     }
-  }
 
-  h3 {
-    font-size: 20px;
-    color: #444;
-    font-weight: 400;
-    padding: 23px 0 0 11px;
+    h3 {
+      font-size: 20px;
+      color: #444;
+      font-weight: 400;
+    }
   }
 }
 
@@ -101,7 +106,21 @@ $link-orange: #F1AB2E;
     box-shadow: none;
     border: none;
   }
-
+  .controls{
+    margin: 15px 0;
+    text-align: center;
+  }
+  .user-name-box {
+    padding: 0 0 0 10px;
+    text-align: center;
+  }
+  .avatar-box,
+  .level-box {
+    margin: 15px auto 0;
+    width: 84px;
+    text-align: center;
+    position: relative;
+  }
   .info {
     text-align: center;
     margin: 10% auto;
@@ -116,8 +135,6 @@ $link-orange: #F1AB2E;
   }
 
   .badges {
-    padding-top: 20px;
-
     img {
       padding-left: 5px;
 
