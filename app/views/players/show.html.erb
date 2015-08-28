@@ -1,4 +1,4 @@
-<div class="show_player">
+<div class="show_player player">
 	<div>
 		<div class="thumbnail avatar pull-left">
 			<%= image_tag image_for(@player), size: '80', size: '80x80' %>
@@ -6,7 +6,7 @@
 
 		<div class="name pull-left">
 			<h1><%= @player.name %></h1>
-			<%= link_to "mailto:#{@player.email}" do %>
+			<%= link_to "mailto:#{@player.email}", class: 'link'  do %>
 			<i class="icon-envelope"></i>
 			<%= @player.email %>
 			<% end %>

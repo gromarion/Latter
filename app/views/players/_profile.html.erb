@@ -24,6 +24,7 @@
 
         <label><%= I18n.t('player.points', points: player.rating) %></label>
         <label><%= I18n.t('player.profile.games', count: player.games.count) %></label>
+        
         <% if player.badges.any? %>
           <%= render partial: 'badges/player_badge', collection: player.badges %>
         <% end %>
