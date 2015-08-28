@@ -306,7 +306,7 @@ class Game < ActiveRecord::Base
   private
 
   def non_negative_score
-    score.split(' : ').map(&:to_i).all? { |score| score >= 0 }
+    score.split(' : ').map(&:to_i).all? { |score| score >= 0 } if score
   end
 
   # Private - Ensures that the challenger is not challenging themselves to boost their

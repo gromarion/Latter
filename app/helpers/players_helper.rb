@@ -71,11 +71,11 @@ module PlayersHelper
       enter_score_options = {
         :remote => true,
         :data => {:disable_with => I18n.t('game.complete.link_loading')},
-        :class => 'btn btn-large btn-with-loading'
+        :class => 'btn btn-with-loading'
       }
 
       link_to new_game_score_path(current_player.in_progress_games(player).first), enter_score_options do
-        content_tag(:i, '', :class => 'icon-plus-sign') +\
+        content_tag(:i, '', :class => 'icon-plus-sign icon-white') +\
           I18n.t('game.complete.link')
       end
     elsif current_player
