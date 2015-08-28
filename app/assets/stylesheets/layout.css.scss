@@ -51,6 +51,11 @@ body {
     margin-bottom: 240px;
     border-radius: 0 0 4px 4px;
 
+    table {
+      height: 300px;
+      overflow: hidden;
+      display: block;
+    }
     a{ color:$link-orange;}
   }
   .badge-table{
