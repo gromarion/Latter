@@ -8,7 +8,7 @@ class GameNotifier
     challenged_mention = fetch_hipchat_mention(game.challenged, room)
     challenger_mention = fetch_hipchat_mention(game.challenger, room)
     if challenged_mention && challenger_mention
-      send_to_room(room, "@#{challenged_mention} has challenged @#{challenger_mention} to play (pingpong)!")
+      send_to_room(room, "@#{challenger_mention} has challenged @#{challenged_mention} to play (pingpong)!")
     end
   end
 
@@ -42,9 +42,9 @@ class GameNotifier
   private
 
   def self.fetch_hipchat_mention(player, room)
-    player_name = I18n.transliterate(player.name)
+    player_name = I18n.transliterate(player.name).downcase
     room.get_room()['participants'].each do |participant|
-      return participant['mention_name'] if I18n.transliterate(participant['name']) == player_name
+      return participant['mention_name'] if I18n.transliterate(participant['name']).downcase == player_name
     end
     return player_name
   end
