@@ -9,6 +9,7 @@ class Player < ActiveRecord::Base
 
   # Rating
   PRO_RATING_BOUNDARY = 2400
+  MIN_NEMESIS_WON_GAMES = 2
 
   default_scope { where(active: true) }
 
@@ -47,9 +48,11 @@ class Player < ActiveRecord::Base
         'challenger_id = ? or challenged_id = ?',
         potential_nemesis_id, potential_nemesis_id
       )
-      return Player.find(potential_nemesis_id).name if nemesis_won_games.size - player_won_games.size > 4
+      if nemesis_won_games.size - player_won_games.size > MIN_NEMESIS_WON_GAMES
+        return Player.find(potential_nemesis_id).name
+      end
     end
-    ''
+    nil
   end
 
   def self.new_with_session(params, session)
