@@ -26,9 +26,10 @@
   margin-bottom: 10px;
   border-bottom: 1px solid #eee;
 
-  .player{
-    border:0;
-    width: 35%;
+  .player,
+  .vs {
+    border: 0;
+    width: 32%;
   }
 
   .player .thumbnail{
