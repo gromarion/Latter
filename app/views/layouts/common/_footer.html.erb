@@ -1,18 +1,22 @@
 <div class="footer row-fluid">
-	<div class="pull-left logo">
-		<%= image_tag 'iso-small-footer.png'%>
-	</div>
-	<div class="pull-left">
-		<%= image_tag 'restorando-logo.png', :class => 'redo' %>
-		<p>We take ping pong  seriously</p>
-	</div>
+	<div class="container-fixer clearfix">
+		<div class="pull-left logo">
+			<%= image_tag 'iso-small-footer.png'%>
+		</div>
+		<div class="pull-left">
+			<a href="https://buenos-aires.restorando.com.ar/" target="_black">
+				<%= image_tag 'restorando-logo.png', :class => 'redo' %>
+			</a>
+			<p>We take ping pong  seriously</p>
+		</div>
 
 
-  <div class="span12 hide">
-    <ul class="inline pull-right">
-      <li><%= application_version %></li>
-      <li><%= valid_html_badge %></li>
-      <li><%= travis_badge %></li>
-    </ul>
+	  <div class="span12 hide">
+	    <ul class="inline pull-right">
+	      <li><%= application_version %></li>
+	      <li><%= valid_html_badge %></li>
+	      <li><%= travis_badge %></li>
+	    </ul>
+	  </div>
   </div>
 </div>
