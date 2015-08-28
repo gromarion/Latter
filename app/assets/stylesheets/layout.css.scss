@@ -55,6 +55,12 @@ body {
       height: 300px;
       overflow: hidden;
       display: block;
+
+      tr,
+      tr td{
+        width: 100%;
+        display: block;
+      }
     }
     a{ color:$link-orange;}
   }
