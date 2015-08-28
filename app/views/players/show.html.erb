@@ -25,10 +25,7 @@
 	<div class="tab-content">
 	  <div class="tab-pane active" id="last_20_games">
 		<div class="page-header">
-		    <h2>
-		      <%= I18n.t('player.games.heading') %>
-		      <small><%= distance_of_last_game_for(@player) %></small>
-		    </h2>
+		    <p><%= distance_of_last_game_for(@player) %></p>
 		  </div>
 		
 		  <div id="games">

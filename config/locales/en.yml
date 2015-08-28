@@ -61,7 +61,7 @@ en:
       success: 'Player was successfully created.'
     update:
       success: 'Player was successfully updated.'
-    game_last_played: "- last played %{distance} ago"
+    game_last_played: "Last played %{distance} ago"
     points: "Points: %{points}"
     edit:
       link: 'Edit Profile'
