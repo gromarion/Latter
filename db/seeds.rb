@@ -6,5 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Badge.create(name: 'Silver Bull', image_url: "http://www.musemelody.com/images/silver-badge.png", description: "Get over 1001 points", required_rating: 1001)
-Badge.create(name: 'Gold Bull', image_url: "http://www.nwunity.org/wp-content/uploads/2014/04/Gold-Badge.png", description: "Get over 1020 points", required_rating: 1020)
+Badge.create(name: 'Silver Bull', image_url: "https://s3.amazonaws.com/f.cl.ly/items/0n3N252J1q1l333B2o3W/price-silver.png", description: "Get over 1001 points", required_rating: 1001)
+Badge.create(name: 'Gold Bull', image_url: "https://s3.amazonaws.com/f.cl.ly/items/0v1Z0p230I2j1T402K0P/price-gold.png", description: "Get over 1020 points", required_rating: 1020)
