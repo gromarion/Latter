@@ -31,6 +31,14 @@ class GameNotifier
     client.user(winner.email).send("PingPously: You have #{defeated} #{loser.name} #{game.score}")
   end
 
+  def self.show_off(player)
+    if player.ranking >= 1 && player.ranking <= 10
+      room = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')['Ping Pong']
+      player_mention = fetch_hipchat_mention(player, room)
+      room.send("")
+    end
+  end
+
   private
 
   def self.fetch_hipchat_mention(player, room)

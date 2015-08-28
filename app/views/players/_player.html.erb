@@ -9,11 +9,14 @@
     </div>
 
     <div class="pull-left">
-      <h3><%= player.name %></h3>
+      <h3>
+        <%= link_to player do %>
+          <%= player.name %>
+        <% end %>
+      </h3>
 
       <div class="row-fluid data_and_actions">
         <div class="span5 points_display">
-          <h4><%= I18n.t('player.points', points: player.rating) %></h4>
         </div>
         <div class="span5 controls">
           <%= render partial: 'players/controls', locals: { player: player } %>
@@ -24,7 +27,7 @@
     <div class="pull-right level-box">
       <div clas="badge-container"><%= image_tag 'badge-respect.png'%></div>
       <div class="points_display">
-          <label>Points: 1080</label>
+          <label><%= I18n.t('player.points', points: player.rating) %></label>
         </div>
     </div>
 
