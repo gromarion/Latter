@@ -10,31 +10,28 @@ class Player < ActiveRecord::Base
   # Rating
   PRO_RATING_BOUNDARY = 2400
 
-  include Gravtastic
+  default_scope { where(active: true) }
 
-  default_scope { where(:active => true) }
-
-  has_gravatar
   devise :database_authenticatable,
          :recoverable,
          :trackable,
          :validatable
   
+  before_save :ensure_authentication_token
+
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
-  before_validation :set_default_password, :on => :create
+  validates_presence_of :name, allow_blank: false
+  validates_numericality_of :rating, minimum: 0
+  validates_inclusion_of :pro, :starter, in: [true, false, nil]
+  validates_inclusion_of :active, in: [true, false]
 
-  validates_presence_of :name, :allow_blank => false
-  validates_numericality_of :rating, :minimum => 0
-  validates_inclusion_of :pro, :starter, :in => [true, false, nil]
-  validates_inclusion_of :active, :in => [true, false]
+  has_many :challenged_games, class_name: 'Game', foreign_key: 'challenged_id', dependent: :destroy
+  has_many :challenger_games, class_name: 'Game', foreign_key: 'challenger_id', dependent: :destroy
+  has_many :won_games, class_name: 'Game', foreign_key: 'winner_id'
 
-  has_many :challenged_games, :class_name => 'Game', :foreign_key => 'challenged_id', :dependent => :destroy
-  has_many :challenger_games, :class_name => 'Game', :foreign_key => 'challenger_id', :dependent => :destroy
-  has_many :won_games, :class_name => 'Game', :foreign_key => 'winner_id'
-
-  has_many :awards, :dependent => :destroy
-  has_many :badges, :through => :awards
+  has_many :awards, dependent: :destroy
+  has_many :badges, through: :awards
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
@@ -46,7 +43,6 @@ class Player < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |player|
-      binding.pry
       if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
         player.email = data['email'] if player.email.blank?
       end
@@ -90,7 +86,6 @@ class Player < ActiveRecord::Base
 
     super
   end
-
 
   # Public - Calculate whether this player is a rookie
   #
@@ -196,20 +191,13 @@ class Player < ActiveRecord::Base
 
       if badge.expire_in_days != 0
         base_date = award_date.present? ? award_date : DateTime.now
-        abs_expiry = base_date.advance(:days => badge.expire_in_days)
+        abs_expiry = base_date.advance(days: badge.expire_in_days)
       else
         abs_expiry = nil
       end
 
-      self.awards.create(:badge_id => badge.id, :award_date => award_date, :expiry => abs_expiry )
+      self.awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry )
     end
-  end
-
-  def serializable_hash(options={})
-    options = {
-      :methods => [:gravatar_url],
-    }.update(options)
-    super(options)
   end
 
   def ensure_authentication_token
@@ -226,8 +214,6 @@ class Player < ActiveRecord::Base
       break token unless Player.exists?(authentication_token: token)
     end
   end
-
-
 
   # Private - Set a default password for the user
   #
@@ -263,5 +249,4 @@ class Player < ActiveRecord::Base
 
     self
   end
-
 end

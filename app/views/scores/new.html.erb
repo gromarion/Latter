@@ -1,4 +1,4 @@
-<%= form_for @game, :url => game_score_path(@game), :method => :post, :remote => true do |f| %>
+<%= form_for @game, url: game_score_path(@game), method: :post, remote: true do |f| %>
   <div class="modal">
     <div class="modal-header">
       <h3><%= I18n.t('score.new.heading') %></h3>
@@ -10,7 +10,7 @@
       <div class="row-fluid">
         <div class="span5">
           <div class="thumbnail">
-            <%= image_tag @game.challenger.gravatar_url(:size => '200') %>
+            <%= image_tag image_for(@game.challenger), size: '200' %>
           </div>
           <h3><%= @game.challenger.name %></h3>
           <div class="control-group">
@@ -24,7 +24,7 @@
 
         <div class="span5">
           <div class="thumbnail">
-            <%= image_tag @game.challenged.gravatar_url(:size => '200') %>
+            <%= image_tag image_for(@game.challenged), size: '200' %>
           </div>
           <h3><%= @game.challenged.name %></h3>
           <div class="control-group">
@@ -37,8 +37,8 @@
 
     <div class="modal-footer">
       <%= f.submit I18n.t('score.new.submit'),
-        :class => 'btn btn-with-loading btn-primary',
-        :data => {:disable_with => I18n.t('score.new.submit_loading')}
+        class: 'btn btn-with-loading btn-primary',
+        data: { disable_with: I18n.t('score.new.submit_loading') }
       %>
     </div>
   </div>

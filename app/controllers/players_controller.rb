@@ -94,7 +94,8 @@ class PlayersController < ApplicationController
       params.require(:player).permit(
         :email,
         :wants_challenge_completed_notifications,
-        :name
+        :name,
+        :image_url
       )
     end
 

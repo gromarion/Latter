@@ -47,6 +47,7 @@ gem 'omniauth-google-oauth2'
 gem 'faraday'
 gem 'pry'
 gem 'hipchat'
+gem 'slim'
 
 group :development, :test do
   # Test with rspec-rails

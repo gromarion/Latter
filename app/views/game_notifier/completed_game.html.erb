@@ -34,7 +34,7 @@
       <table border="0" cellpadding="20" cellspacing="0" width="100%">
         <tr mc:repeatable>
           <td valign="top">
-            <img src="<%= @game.challenger.gravatar_url(:size => 260) %>" style="max-width:260px;" mc:label="image" mc:edit="tiwc300_image00" />
+            <img src="<%= image_for(@game.challenger), size: 260 %>" style="max-width:260px;" mc:label="image" mc:edit="tiwc300_image00" />
             <div mc:edit="tiwc300_content00">
               <h4 class="h4"><%= @game.challenger.name %></h4>
               <br />
@@ -52,7 +52,7 @@
       <table border="0" cellpadding="20" cellspacing="0" width="100%">
         <tr mc:repeatable>
           <td valign="top">
-            <img src="<%= @game.challenged.gravatar_url(:size => 260) %>" style="max-width:260px;" mc:label="image" mc:edit="tiwc300_image01" />
+            <img src="<%= image_for(@game.challenged), size: 260 %>" style="max-width:260px;" mc:label="image" mc:edit="tiwc300_image01" />
             <div mc:edit="tiwc300_content01">
               <h4 class="h4"><%= @game.challenged.name %></h4>
               <br />

@@ -17,7 +17,7 @@
 				<% badge.players.each do |player| %>
 					<li>
 						<%= link_to player do %>
-							<%= image_tag(player.gravatar_url(:size => '24')) %>
+							<%= image_tag(image_for(player), size: '24') %>
 						<% end %>
 					</li>
 				<% end %>

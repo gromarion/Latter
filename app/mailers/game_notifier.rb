@@ -1,12 +1,14 @@
 class GameNotifier
   def self.notify_challenged(game)
-    HipChat::Client.new("PtCASLNBYvstFCyKbCTFWCpRn7DyUf1PyVv1nbRu", api_version: 'v2').user(
-      game.challenged.email
-    ).send("Latter: You have been challenged by #{game.challenger.name} (pingpong)")
+    client = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')
+    client.user(game.challenged.email).send(
+      "Latter: You have been challenged by #{game.challenger.name} (pingpong)"
+    )
+    fetch_hipchat_mention(game.challenger.name, game.challenged.name, client)
   end
 
   def self.completed_game(game)
-    client = HipChat::Client.new("PtCASLNBYvstFCyKbCTFWCpRn7DyUf1PyVv1nbRu", api_version: 'v2')
+    client = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')
 
     recipients = [game.challenged, game.challenger].select do |p|
       p.wants_challenge_completed_notifications?
@@ -16,6 +18,23 @@ class GameNotifier
 
     recipients.each do |recipient|
       client.user(recipient).send("Latter: Game has been completed! (pingpong)")
+    end
+  end
+
+  private
+
+  def self.fetch_hipchat_mention(challenger, challenged, client)
+    room = client['Ping Pong']
+    room.get_room()["participants"].each do |participant|
+      if participant["name"] == challenged
+        room.send(
+          'Latter',
+          "@#{participant['mention_name']} you have been challenged by #{challenger} (pingpong)",
+          color: 'purple',
+          message_format: 'text',
+          notify: true
+        )
+      end
     end
   end
 end

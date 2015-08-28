@@ -1,7 +1,7 @@
 <% cache [player, "profile"] do %>
 <div class="profile">
   <div class="thumbnail">
-    <%= image_tag player.gravatar_url(:size => 300), :title => player.name %>
+    <%= image_tag image_for(player), size: 300, title: player.name %>
   </div>
 
   <div class="info">
@@ -9,8 +9,8 @@
     <h2><%= player.name %></h2>
     <%= ranking(player) %>
 
-    <h3><%= I18n.t('player.points', :points => player.rating) %></h3>
-    <h3><%= I18n.t('player.profile.games', :count => player.games.count) %></h3>
+    <h3><%= I18n.t('player.points', points: player.rating) %></h3>
+    <h3><%= I18n.t('player.profile.games', count: player.games.count) %></h3>
 
     <div class="badges">
       <% if player.badges.any? %>

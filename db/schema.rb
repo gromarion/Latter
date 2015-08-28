@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827120021) do
+ActiveRecord::Schema.define(version: 20150828014751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20150827120021) do
     t.string   "authentication_token",                    default: "",    null: false
     t.string   "provider"
     t.string   "uid"
+    t.string   "image_url"
   end
 
   add_index "players", ["active"], name: "index_players_on_active", using: :btree

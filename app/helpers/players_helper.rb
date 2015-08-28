@@ -27,6 +27,11 @@ module PlayersHelper
     end
   end
 
+  def image_for(player)
+    return 'https://travisrhancock.files.wordpress.com/2014/08/ping-pong.jpg' unless player.image_url
+    player.image_url
+  end
+
   def distance_of_last_game_for(player)
     last_game = player.games.order('updated_at DESC').first
 

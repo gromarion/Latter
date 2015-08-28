@@ -1,7 +1,7 @@
 <fieldset>
   <legend><%= form.object.new_record? ? I18n.t('player.new.heading') : I18n.t('player.edit.heading') %></legend>
 
-  <%= render :partial => 'shared/form_errors', :locals => {:form => form} %>
+  <%= render partial: 'shared/form_errors', locals: { form: form } %>
 
   <div class="control-group">
     <%= form.label :name %>
@@ -15,14 +15,7 @@
 
   <% unless form.object.new_record? %>
     <div class="control-group">
-      <%= form.label :authentication_token %>
-      <div class="input-append">
-        <%= form.text_field :authentication_token, :disabled => 'disabled' %>
-        <%= link_to 'Manage', player_authentication_token_path(form.object), :class => 'btn' %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= form.label :wants_challenge_completed_notifications, :class => 'checkbox' do %>
+      <%= form.label :wants_challenge_completed_notifications, class: 'checkbox' do %>
         <%= form.check_box :wants_challenge_completed_notifications %>
         <%= I18n.t('player.attributes.wants_challenge_completed_notifications') %>
       <% end %>
@@ -30,11 +23,15 @@
         <%= I18n.t('player.attributes.wants_challenge_completed_notifications_help') %>
       </span>
     </div>
-
   <% end %>
 
+  <div class="control-group">
+    <%= form.label :image_url %>
+    <%= form.text_field :image_url %>
+  </div>
+
   <div class="form-actions">
-    <%= form.submit I18n.t('player.form.save'), :class => 'btn btn-primary' %>
-    <%= link_to I18n.t('player.form.cancel'), root_path, :class => 'btn' %>
+    <%= form.submit I18n.t('player.form.save'), class: 'btn btn-primary' %>
+    <%= link_to I18n.t('player.form.cancel'), root_path, class: 'btn' %>
   </div>
 </fieldset>

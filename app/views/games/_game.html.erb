@@ -3,29 +3,29 @@
   <div class="row-fluid game">
     <div class="span3">
       <div class="thumbnail">
-       <%= image_tag game.winner.gravatar_url(:size => '180'), :size => '180x180' %>
+       <%= image_tag image_for(game.winner), size: '180', size: '180x180' %>
       </div>
     </div>
 
     <div class='span6 vs'>
       <h1>vs.</h1>
       <div class="label label-info">
-        <%= game.complete? ? I18n.t('game.index.completed', :score => game.score) : I18n.t('game.index.challenged') %>
+        <%= game.complete? ? I18n.t('game.index.completed', score: game.score) : I18n.t('game.index.challenged') %>
         <br />
       </div>
       <% if [game.challenged, game.challenger].include?(current_player) && game.can_rollback? %>
         <%= link_to I18n.t('game.rollback.link_to'),
             game,
-            :method => :delete,
-            :class => 'btn btn-danger rollback-btn',
-            :confirm => I18n.t('game.rollback.confirm')
+            method: :delete,
+            class: 'btn btn-danger rollback-btn',
+            confirm: I18n.t('game.rollback.confirm')
         %>
       <% end %>
     </div>
 
     <div class="span3">
       <div class="thumbnail">
-       <%= image_tag game.loser.gravatar_url(:size => '180'), :size => '180x180' %>
+       <%= image_tag image_for(game.loser), size: '180', size: '180x180' %>
       </div>
     </div>
   </div>
