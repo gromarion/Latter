@@ -1,3 +1,6 @@
+@import url("http://fonts.googleapis.com/css?family=Arvo");
+
+
 /* colors */
 
 $dark-violete: #3D385C;
@@ -83,7 +86,7 @@ h1, h2, h3, h4, h5 {
 
 .empty-state-players{
   margin: 0 auto;
-  padding: 0 40px 0 102px;
+  padding: 0 62px 0 12px;
 
   h3.alert-heading {
     font-size: 19px;
@@ -95,8 +98,9 @@ h1, h2, h3, h4, h5 {
   }
 
   img{
-    margin: 36px auto;
-    display: inherit;  
+    margin: 40px auto;
+    display: inherit;
+    width: 340px;
   }
 }
 .container-fixer {
@@ -183,8 +187,30 @@ a.latter.brand {
 }
 
 .footer{
-    background: #ECF2F3;
-    padding-top: 6px;
+    background: #444444;
+    padding: 4px;
+    position: fixed;
+    color: #eee;
+    bottom: 0;
+
+    .logo{
+      margin: 0 14px;
+      
+      img{
+        height: 55px;
+        margin-top: -18px;
+      }
+    }
+    
+    .redo{
+      height: 17px;
+    }
+    p{
+      font-family: 'Arvo';
+      font-size: 12px;
+      opacity: 0.8;
+      margin: 0;
+    }
 }
 
 
