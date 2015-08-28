@@ -11,8 +11,11 @@ $link-orange: #F1AB2E;
 
 body {
     padding-top: 0;
+    padding-bottom: 40px;
 }
-
+.label-info {
+    background-color: $dark-violete;
+}
 .navbar-inner {
   background: $dark-violete !important;
   border-radius: 0;
@@ -21,6 +24,7 @@ body {
 .link{
   color: $link-orange;
   padding: 0 5px;
+  font-size: 14px;
 }
 .btn{
   background: $call-to-action;
@@ -39,10 +43,25 @@ body {
     color: #FFF;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
+.sidebar tbody {
+    max-height: 230px !important;
+    overflow: auto !important;
+    display: block !important;
+    border: 1px solid #ddd;
+    margin-bottom: 240px;
+    border-radius: 0 0 4px 4px;
+
+    a{ color:$link-orange;}
+  }
+  .badge-table{
+    img {
+      width: 42px;
+    }
+  }
 
 @media (max-width: 767px){
   body {
-      padding: 0;
+      padding: 0 0 40px;
   }
   .container-responsive-padding{
     padding: 0 3%;
@@ -55,11 +74,11 @@ body {
   }
   .sidebar .profile, 
   .sidebar .about{
-    margin-top: -20px;
     border: 0 !important;
     margin-bottom: 30px !important;
     box-shadow: none !important;
   }
+
 }
 
 /* own style */
