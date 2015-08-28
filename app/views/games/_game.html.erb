@@ -1,13 +1,13 @@
 <% cache game do %>
   <% if game.challenger and game.challenged %>
   <div class="row-fluid game">
-    <div class="player span4">
+    <div class="player pull-left">
       <div class="thumbnail">
        <%= image_tag image_for(game.winner), size: '180', size: '180x180' %>
       </div>
     </div>
 
-    <div class='span4 vs'>
+    <div class='pull-left vs'>
       <h4>vs.</h4>
       <div class="label label-info">
         <%= game.complete? ? I18n.t('game.index.completed', score: game.score) : I18n.t('game.index.challenged') %>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="player span4">
+    <div class="player pull-left">
       <div class="thumbnail">
        <%= image_tag image_for(game.loser), size: '180', size: '180x180' %>
       </div>

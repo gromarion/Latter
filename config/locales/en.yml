@@ -26,7 +26,7 @@ en:
       language: Language
   sessions:
     new:
-      heading: Log in to Latter
+      heading: Log in to PingPously
       submit_button: Sign in
   brand:
     title: PingPously
@@ -49,6 +49,7 @@ en:
       message: There aren't any players in the database right now. You can add an account for yourself in the Rails console, and then log in to add players.
     profile:
       games: 'Games: %{count}'
+      nemesis: 'My Nemesis'
     games:
       heading: Last 20 Games
     form:
