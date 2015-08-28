@@ -41,6 +41,17 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def nemesis
+    Game.where('winner_id != ?', id).sort_by(&:winner_id).group_by(&:winner_id).each do |potential_nemesis_id, nemesis_won_games|
+      player_won_games = Game.where(winner_id: id).where(
+        'challenger_id = ? or challenged_id = ?',
+        potential_nemesis_id, potential_nemesis_id
+      )
+      return Player.find(potential_nemesis_id).name if nemesis_won_games.size - player_won_games.size > 4
+    end
+    ''
+  end
+
   def self.new_with_session(params, session)
     super.tap do |player|
       if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
