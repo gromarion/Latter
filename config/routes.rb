@@ -1,6 +1,10 @@
 Latter::Application.routes.draw do
   devise_for :players, :controllers => { :omniauth_callbacks => "players/omniauth_callbacks" }
 
+  devise_scope :user do
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
   resources :games, :except => [:edit, :update] do
     post :complete, :on => :member
     resource :score, :controller => 'scores', :only => [:new, :create]
@@ -8,7 +12,6 @@ Latter::Application.routes.draw do
 
   resources :statistics, :only => [:index]
   resources :players do
-    resource :authentication_token, :only => [:show, :destroy]
   end
 
   get "/player" => "players#current", :constraints => {:format => :json}

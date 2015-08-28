@@ -1,29 +1,21 @@
-class GameNotifier < ActionMailer::Base
-  default from: "notifications@latter.3months.com"
-
-  def new_game(game)
-    @game = game
-    @preview_text = I18n.t('game.notifications.new_game.preview_text', :challenger => game.challenger.email)
-
-    mail(
-      :to => game.challenged.email,
-      :subject => I18n.t('game.notifications.new_game.subject')
-    )
+class GameNotifier
+  def self.notify_challenged(game)
+    HipChat::Client.new("PtCASLNBYvstFCyKbCTFWCpRn7DyUf1PyVv1nbRu", api_version: 'v2').user(
+      game.challenged.email
+    ).send("Latter: You have been challenged by #{game.challenger.name} (pingpong)")
   end
 
-  def completed_game(game)
-    @game = game
-    @preview_text = I18n.t('game.notifications.completed_game.preview_text')
+  def self.completed_game(game)
+    client = HipChat::Client.new("PtCASLNBYvstFCyKbCTFWCpRn7DyUf1PyVv1nbRu", api_version: 'v2')
 
-    @recipients = [game.challenged, game.challenger].select { |p|
+    recipients = [game.challenged, game.challenger].select do |p|
       p.wants_challenge_completed_notifications?
-    }.map(&:email)
+    end.map(&:email)
 
-    return if @recipients.empty?
+    return if recipients.empty?
 
-    mail(
-      :to => @recipients,
-      :subject => I18n.t('game.notifications.completed_game.subject')
-    )
+    recipients.each do |recipient|
+      client.user(recipient).send("Latter: Game has been completed! (pingpong)")
+    end
   end
 end

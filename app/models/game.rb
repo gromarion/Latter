@@ -18,20 +18,20 @@ class Game < ActiveRecord::Base
   validates_presence_of :challenger, :challenged
   validates_associated  :challenger, :challenged
 
-  validates_inclusion_of :complete, :in => [true, false]
-  validates_format_of :score, :with => /\A[\d]+[\s]*:[\s]*[\d]+\Z/, :allow_nil => true
-  validates_numericality_of :result, :minimum => -1.0, :maximum => 1.0, :allow_nil => true
+  validates_inclusion_of :complete, in: [true, false]
+  validates_format_of :score, with: /\A[\d]+[\s]*:[\s]*[\d]+\Z/, allow_nil: true
+  validates_numericality_of :result, minimum: -1.0, maximum: 1.0, allow_nil: true
   validate :inverse_game_does_not_exist?
-  validate :in_progress_game_does_not_exist?, :on => :create
+  validate :in_progress_game_does_not_exist?, on: :create
   validate :challenger_and_challenged_are_not_the_same
 
-  scope :complete, -> { where(:complete => true) }
+  scope :complete, -> { where(complete: true) }
 
   set_callback :complete, :after, :award_badges
 
   after_create do
     create_activity(key: 'game.created', owner: challenger)
-    GameNotifier.new_game(self).deliver_now!
+    GameNotifier.notify_challenged(self)
   end
 
   set_callback :complete, :after do
@@ -147,13 +147,13 @@ class Game < ActiveRecord::Base
     @by_week = Game.select("DATE_TRUNC('week', created_at) AS week, count(*) AS games").
       group('week').
       order('week').
-      where(:complete => true).
+      where(complete: true).
       where('created_at > ?', DateTime.now.beginning_of_month)
 
     @by_day = Game.select("DATE_TRUNC('day', created_at) AS day, count(*) AS games").
       group('day').
       order('day').
-      where(:complete => true).
+      where(complete: true).
       where('created_at > ?', DateTime.now.beginning_of_week)
 
     @by_challenger = Game.group('challenger_id').
@@ -171,10 +171,10 @@ class Game < ActiveRecord::Base
       compact
 
     {
-      :by_week => @by_week,
-      :by_day  => @by_day,
-      :by_challenger => @by_challenger,
-      :by_challenged => @by_challenged
+      by_week: @by_week,
+      by_day: @by_day,
+      by_challenger: @by_challenger,
+      by_challenged: @by_challenged
     }
   end
 
@@ -284,10 +284,10 @@ class Game < ActiveRecord::Base
   # Returns a rating object
   def challenger_rating
     Rating.new(
-      :result => result,
-      :old_rating => challenger.rating,
-      :other_rating => challenged.rating,
-      :k_factor => challenger.k_factor
+      result: result,
+      old_rating: challenger.rating,
+      other_rating: challenged.rating,
+      k_factor: challenger.k_factor
     )
   end
 
@@ -295,10 +295,10 @@ class Game < ActiveRecord::Base
   # See Game#challenger_rating
   def challenged_rating
     Rating.new(
-      :result => (1.0 - result),
-      :old_rating => challenged.rating,
-      :other_rating => challenger.rating,
-      :k_factor => challenged.k_factor
+      result: (1.0 - result),
+      old_rating: challenged.rating,
+      other_rating: challenger.rating,
+      k_factor: challenged.k_factor
     )
   end
 
@@ -329,9 +329,9 @@ class Game < ActiveRecord::Base
   def inverse_game_does_not_exist?
     if self.challenger and self.challenged
       game = Game.where(
-        :complete => false,
-        :challenger_id => self.challenged.id,
-        :challenged_id => self.challenger.id
+        complete: false,
+        challenger_id: self.challenged.id,
+        challenged_id: self.challenger.id
       ).first
 
       game.nil? ? true : errors.add(:base, I18n.t('game.errors.game_in_progress')); false
@@ -351,13 +351,10 @@ class Game < ActiveRecord::Base
   def in_progress_game_does_not_exist?
     if self.challenger && self.challenged
       Game.where(
-        :complete => false,
-        :challenger_id => self.challenger.id,
-        :challenged_id => self.challenged.id
+        complete: false,
+        challenger_id: self.challenger.id,
+        challenged_id: self.challenged.id
       ).first.nil? ? true : errors.add(:base, :in_progress_game); false
     end
   end
-
-
-
 end

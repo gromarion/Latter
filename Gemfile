@@ -46,7 +46,7 @@ gem 'font-awesome-rails'
 gem 'omniauth-google-oauth2'
 gem 'faraday'
 gem 'pry'
-
+gem 'hipchat'
 
 group :development, :test do
   # Test with rspec-rails

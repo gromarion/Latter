@@ -106,7 +106,7 @@ Devise.setup do |config|
   # config.remember_for = 2.weeks
 
   # If true, extends the user's remember period when remembered via cookie.
-  # config.extend_remember_period = false
+  config.extend_remember_period = false
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
@@ -157,7 +157,7 @@ Devise.setup do |config|
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
-  config.reset_password_within = 6.hours
+  # config.reset_password_within = 6.hours
 
   # ==> Configuration for :encryptable
   # Allow you to use another encryption algorithm besides bcrypt (default). You can use
@@ -179,12 +179,12 @@ Devise.setup do |config|
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
-  # config.default_scope = :user
+  config.default_scope = :player
 
   # Configure sign_out behavior.
   # Sign_out action can be scoped (i.e. /users/sign_out affects only :user scope).
   # The default is true, which means any logout action will sign out all active scopes.
-  # config.sign_out_all_scopes = true
+  config.sign_out_all_scopes = false
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
@@ -200,7 +200,7 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
   # config.omniauth :google_oauth2, "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", { }
-  config.omniauth :google_oauth2, "785970535978-vqgp7jn4kmifihku4lu56odk0lugpg04.apps.googleusercontent.com", "AAOWoWA1v25XIF7Go6fSyeJC", { client_options: { ssl: { ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" } } }
+  config.omniauth :google_oauth2, "785970535978-erdjmirbrsuelin6i14rb15rjagrda1f.apps.googleusercontent.com", "zJtODqQj_eNVE2Nsb08NPE2X", { client_options: { ssl: { ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" } } }
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

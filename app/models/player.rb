@@ -23,7 +23,6 @@ class Player < ActiveRecord::Base
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   before_validation :set_default_password, :on => :create
-  before_save :ensure_authentication_token
 
   validates_presence_of :name, :allow_blank => false
   validates_numericality_of :rating, :minimum => 0

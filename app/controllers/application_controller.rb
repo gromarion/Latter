@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :needs_password?, :if => :current_player
   before_filter :set_locale
-  protect_from_forgery
 
 
   # Public: Override default_url_options to automatically mixin the current

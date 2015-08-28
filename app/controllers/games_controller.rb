@@ -26,7 +26,6 @@ class GamesController < ApplicationController
     @game = current_player.challenger_games.new.tap do |game|
       game.challenged = Player.find(game_params[:challenged_id]) rescue nil
     end
-
     respond_to do |format|
       if @game.save
         format.html { redirect_to Player, notice: I18n.t('game.new.success') }
