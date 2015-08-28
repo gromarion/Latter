@@ -32,6 +32,22 @@ module PlayersHelper
     player.image_url
   end
 
+  def level_image_for(player)
+    if player.rating < 1100
+      "/assets/images/badge-newbie.png"
+    elsif player.rating < 1200
+      "/assets/images/badge-badass.png"
+    elsif player.rating < 1300
+      "/assets/images/badge-ninja.png"
+    else
+      "/assets/images/badge-respect.png"
+    end
+  end
+
+  def level_image_tag_for(player)
+    level_image_for(player).gsub('/assets/images/', '')
+  end
+
   def distance_of_last_game_for(player)
     last_game = player.games.order('updated_at DESC').first
 

@@ -20,7 +20,7 @@
 
     <div class="level-box">
       <div class="badges">
-        <div clas="badge-container"><img src="/assets/badge-respect.png" alt="Badge respect"></div>
+        <div clas="badge-container"><%= image_tag level_image_tag_for(player) %></div>
 
         <label><%= I18n.t('player.points', points: player.rating) %></label>
         <label><%= I18n.t('player.profile.games', count: player.games.count) %></label>
