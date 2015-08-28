@@ -24,6 +24,7 @@ class Game < ActiveRecord::Base
   validate :inverse_game_does_not_exist?
   validate :in_progress_game_does_not_exist?, on: :create
   validate :challenger_and_challenged_are_not_the_same
+  validate :non_negative_score
 
   scope :complete, -> { where(complete: true) }
 
@@ -303,6 +304,10 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def non_negative_score
+    score.split(' : ').map(&:to_i).all? { |score| score >= 0 } if score
+  end
 
   # Private - Ensures that the challenger is not challenging themselves to boost their
   # score. This is not possible from the webview, but is possible via the API

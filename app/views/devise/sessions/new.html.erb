@@ -6,7 +6,9 @@
     <div class="login-box">
       <legend><%= I18n.t('sessions.new.heading') %></legend>
       <%= render :partial => 'layouts/common/flashes' %>
+      <%= link_to 'Login in with Google!', player_omniauth_authorize_path(:google_oauth2), class: 'btn btn-large' %>
 
+      <div class="hide">
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
         <%= f.email_field :email, 
@@ -37,5 +39,6 @@
       <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
         <%= link_to I18n.t('devise.links.resend_confirmation'), new_confirmation_path(resource_name) %><br />
       <% end -%>
+      </div>
     </div>
 </div>
