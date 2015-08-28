@@ -36,7 +36,7 @@ class Game < ActiveRecord::Base
 
   set_callback :complete, :after do
     create_activity(key: 'game.completed', owner: winner)
-    GameNotifier.completed_game(self).deliver_now!
+    GameNotifier.notify_completed_game(self)
   end
 
   # Public - result setter
