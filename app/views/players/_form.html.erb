@@ -1,25 +1,27 @@
-<fieldset>
-  <legend><%= form.object.new_record? ? I18n.t('player.new.heading') : I18n.t('player.edit.heading') %></legend>
+<div class="container-responsive-padding">
+  <fieldset>
+    <legend><%= form.object.new_record? ? I18n.t('player.new.heading') : I18n.t('player.edit.heading') %></legend>
 
-  <%= render partial: 'shared/form_errors', locals: { form: form } %>
+    <%= render partial: 'shared/form_errors', locals: { form: form } %>
 
-  <div class="control-group">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+    <div class="control-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: 'input-xxlarge' %>
+    </div>
 
-  <div class="control-group">
-    <%= form.label :email %>
-    <%= form.email_field :email %>
-  </div>
+    <div class="control-group">
+      <%= form.label :email %>
+      <%= form.email_field :email, class: 'input-xxlarge' %>
+    </div>
 
-  <div class="control-group">
-    <%= form.label :image_url %>
-    <%= form.text_field :image_url %>
-  </div>
+    <div class="control-group">
+      <%= form.label :image_url %>
+      <%= form.text_field :image_url, class: 'input-xxlarge' %>
+    </div>
 
-  <div class="form-actions">
-    <%= form.submit I18n.t('player.form.save'), class: 'btn btn-primary' %>
-    <%= link_to I18n.t('player.form.cancel'), root_path, class: 'btn' %>
-  </div>
-</fieldset>
+    <div class="form-actions">
+      <%= form.submit I18n.t('player.form.save'), class: 'btn btn-primary' %>
+      <%= link_to I18n.t('player.form.cancel'), root_path, class: 'btn' %>
+    </div>
+  </fieldset>
+</div>

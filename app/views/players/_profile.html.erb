@@ -32,10 +32,12 @@
 
     <div class="row-fluid data_and_actions">
         <div class="controls">
-          <a class="link" href="/players/3/edit?locale=en"><i class=" "></i>Edit Profile</a>
+          <%= link_to edit_player_path(player), class: 'link' do %>
+            <i class=" "></i>Edit Profile</a>
+          <% end %>
+          <%= link_to I18n.t('navbar.links.log_out'), destroy_player_session_path, class: 'link', :method => :delete %>
         </div>
     </div>
-
   </div>
 
 </div>

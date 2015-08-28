@@ -17,6 +17,7 @@ body {
 }
 .link{
   color: $link-orange;
+  padding: 0 5px;
 }
 .btn{
   background: $call-to-action;
@@ -39,6 +40,9 @@ body {
 @media (max-width: 767px){
   body {
       padding: 0;
+  }
+  .container-responsive-padding{
+    padding: 0 3%;
   }
   .container-fixer{
     padding: 0 !important;
@@ -75,10 +79,6 @@ h1, h2, h3, h4, h5 {
     height: 61px;
   }
   h3{ float: left;}
-}
-
-div#players {
-    padding: 0 4%;
 }
 
 .empty-state-players{
@@ -183,7 +183,7 @@ a.latter.brand {
 }
 
 .footer{
-    background: #EDECF3;
+    background: #ECF2F3;
     padding-top: 6px;
 }
 

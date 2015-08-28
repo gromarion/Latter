@@ -1,10 +1,20 @@
-<div class="page-header">
-  <h1><%= I18n.t('game.index.heading') %></h1>
-</div>
-
+<div class="container-responsive-padding">
 <div id="games">
+  <ul class="nav nav-tabs">
+    <li>
+      <%= link_to I18n.t('navbar.links.all_players'), root_url %>      
+    </li>
+    <li class="active">
+      <%= link_to I18n.t('navbar.links.games'), Game %>
+    </li>
+    <li>
+      <%= link_to I18n.t('navbar.links.statistics'), statistics_path %>
+    </li>
+  </ul>
+
   <%= render @games %>
   <%= render 'none' if @games.empty? %>
 </div>
 
 <%= paginate @games %>
+</div>

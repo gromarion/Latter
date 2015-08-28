@@ -2,7 +2,21 @@
   <%= render 'sidebar' %>
 <% end %>
 
-<div id="players">
-  <%= render @players %>
-  <%= render 'players/none' if @players.empty? %>
+<div class="container-responsive-padding">
+  <div id="players">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <%= link_to I18n.t('navbar.links.all_players'), root_url %>      
+      </li>
+      <li>
+        <%= link_to I18n.t('navbar.links.games'), Game %>
+      </li>
+      <li>
+        <%= link_to I18n.t('navbar.links.statistics'), statistics_path %>
+      </li>
+    </ul>
+
+    <%= render @players %>
+    <%= render 'players/none' if @players.empty? %>
+  </div>
 </div>

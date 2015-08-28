@@ -1,6 +1,16 @@
-<div class="page-header">
-  <h1>Statistics</h1>
-</div>
+<div class="container-responsive-padding">
+
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to I18n.t('navbar.links.all_players'), root_url %>      
+  </li>
+  <li>
+    <%= link_to I18n.t('navbar.links.games'), Game %>
+  </li>
+  <li class="active">
+    <%= link_to I18n.t('navbar.links.statistics'), statistics_path %>
+  </li>
+</ul>
 
 <div class="row-fluid">
   <div class="span6">

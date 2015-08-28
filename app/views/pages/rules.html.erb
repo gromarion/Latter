@@ -1,3 +1,11 @@
+<div class="container-responsive-padding">
+
+<ul class="nav nav-tabs">
+  <li class="active"><%= link_to I18n.t('navbar.links.rules'), page_path('rules') %></li>
+  <li><%= link_to I18n.t('navbar.links.badges'), Badge %></li>
+</ul>
+
+
 <% if I18n.locale == :mi %>
 <div class="alert alert-info">
   <h3>
@@ -13,12 +21,16 @@
 <% end %>
 
 <div class="page-header">
+  <label>Learn about how to win <%= link_to I18n.t('navbar.links.badges'), Badge %></label>
+
+  </br>
   <h1>
     Rules &amp; Regulations
+  </h1>
   <small>
     <%= link_to 'Adapted from International Table Tennis Federation regulations', 'http://www.ittf.com/ittf_handbook/ittf_hb.html' %>
   </small>
-</h1>
+
 </div>
 
 <div class="row-fluid">
@@ -170,3 +182,4 @@
   </div>
 </div>
 
+</div>

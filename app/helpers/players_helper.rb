@@ -2,7 +2,7 @@ module PlayersHelper
 
   def ranking(player)
     content_tag(:div, :class => 'label label-important ranking') do
-      (player.ranking.to_s + "&nbsp;" + trend(player)).html_safe
+      (player.ranking.to_s + trend(player)).html_safe
     end
   end
 
