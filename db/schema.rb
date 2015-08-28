@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828022858) do
+ActiveRecord::Schema.define(version: 20150828143641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(version: 20150828022858) do
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "award_rule"
-    t.integer  "award_rule_count", default: 0
+    t.integer  "required_rating",  default: 0
     t.boolean  "allow_duplicates", default: false
     t.integer  "expire_in_days",   default: 0
   end
