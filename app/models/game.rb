@@ -1,9 +1,9 @@
 class Game < ActiveRecord::Base
   include PublicActivity::Common
 
-  belongs_to :challenger, :class_name => 'Player', :touch => true
-  belongs_to :challenged, :class_name => 'Player', :touch => true
-  belongs_to :winner,     :class_name => 'Player'
+  belongs_to :challenger, class_name: 'Player', touch: true
+  belongs_to :challenged, class_name: 'Player', touch: true
+  belongs_to :winner,     class_name: 'Player'
 
   define_callbacks :complete
 
@@ -19,12 +19,11 @@ class Game < ActiveRecord::Base
   validates_associated  :challenger, :challenged
 
   validates_inclusion_of :complete, in: [true, false]
-  validates_format_of :score, with: /\A[\d]+[\s]*:[\s]*[\d]+\Z/, allow_nil: true
   validates_numericality_of :result, minimum: -1.0, maximum: 1.0, allow_nil: true
   validate :inverse_game_does_not_exist?
   validate :in_progress_game_does_not_exist?, on: :create
   validate :challenger_and_challenged_are_not_the_same
-  validate :non_negative_score
+  validate :valid_score
 
   scope :complete, -> { where(complete: true) }
 
@@ -82,23 +81,15 @@ class Game < ActiveRecord::Base
   #
   # Returns the completed game
   def complete!(scores = {})
-    return false unless scores and scores.has_key?(:challenger_score) and scores.has_key?(:challenged_score)
+    return false unless scores && scores.key?(:challenger_score) && scores.key?(:challenged_score)
 
     run_callbacks :complete do
-      if scores[:challenger_score].to_i > scores[:challenged_score].to_i
-        self.winner = challenger
-        self.result = 1.0
-
-        self.score = [scores[:challenger_score], scores[:challenged_score]].join ' : '
-      else
-        self.winner = challenged
-        self.result = 0.0
-
-        self.score = [scores[:challenged_score], scores[:challenger_score]].join ' : '
-      end
+      challenger_score = scores[:challenger_score].to_i
+      challenged_score = scores[:challenged_score].to_i
+      set_winner_and_scores(challenger_score, challenged_score)
 
       self.complete = true
-      self.set_rating_changes
+      set_rating_changes
       self.save!
     end
 
@@ -111,8 +102,7 @@ class Game < ActiveRecord::Base
   #
   # Returns an integer score
   def score_for(player)
-    score_components = self.score.split(/\s*:\s*/).map { |s| s.strip.to_i }
-    self.winner?(player) ? score_components[0] : score_components[1]
+    winner?(player) ? winner_score : loser_score
   end
 
   # Public - Check whether a particular player won the game
@@ -126,7 +116,7 @@ class Game < ActiveRecord::Base
   #
   # Returns true if the given player won, or false if not
   def winner?(other_player)
-    other_player == self.winner
+    other_player == winner
   end
 
   # Public - Check whether a given player lost the game
@@ -188,7 +178,7 @@ class Game < ActiveRecord::Base
   # Returns true if the game CAN be rolled back, or false if not
   def can_rollback?
     return false unless challenged_rating_change && challenger_rating_change
-    return challenged.games.limit(1).include?(self) || challenger.games.limit(1).include?(self)
+    challenged.games.limit(1).include?(self) || challenger.games.limit(1).include?(self)
   end
 
   # Public - Return the winner of a game
@@ -199,7 +189,7 @@ class Game < ActiveRecord::Base
   # the challenged player won. If the result is 0, then the
   # game was a draw. If the result is 1, then the challenger won.
   def winner
-    self.result == 1.0 ? self.challenger : self.challenged
+    result == 1.0 ? challenger : challenged
   end
 
   # Public - Return the loser of a game
@@ -209,7 +199,7 @@ class Game < ActiveRecord::Base
   #
   # Returns the loser of the game
   def loser
-    self.result != 1.0 ? self.challenger : self.challenged
+    result != 1.0 ? challenger : challenged
   end
 
   # Public - Return the ratings for each player in the game
@@ -230,17 +220,15 @@ class Game < ActiveRecord::Base
   #
   # Returns a string in the format id-player 1 name-vs-player 2 name
   def to_param
-    "#{self.id}-#{self.challenger.name.parameterize}-vs-#{self.challenged.name.parameterize}"
+    "#{id}-#{challenger.name.parameterize}-vs-#{challenged.name.parameterize}"
   end
 
   # Check the challenger and challenged players for new badge awards
   def award_badges
     Badge.all.each do |the_badge|
-      [challenger,challenged].each do |the_player|
-        if the_badge.qualifies?(the_player)
-          the_player.award!(the_badge)
-        end
-       end
+      [challenger, challenged].each do |the_player|
+        the_player.award!(the_badge) if the_badge.qualifies?(the_player)
+      end
     end
   end
 
@@ -252,21 +240,21 @@ class Game < ActiveRecord::Base
   #
   # Returns the destroyed game
   def rollback!
-    if self.challenged_rating_change and self.challenger_rating_change
+    if challenged_rating_change && challenger_rating_change
 
-      if self.winner?(self.challenged)
-        self.challenged.rating += -self.challenged_rating_change.round
-        self.challenger.rating += self.challenger_rating_change.round.abs + 1
+      if winner?(challenged)
+        challenged.rating += - challenged_rating_change.round
+        challenger.rating += challenger_rating_change.round.abs + 1
       else
-        self.challenger.rating += -self.challenger_rating_change.round
-        self.challenged.rating += self.challenged_rating_change.round.abs + 1
+        challenger.rating += - challenger_rating_change.round
+        challenged.rating += challenged_rating_change.round.abs + 1
       end
 
-      self.challenged.save
-      self.challenger.save
+      challenged.save
+      challenger.save
     end
 
-    self.destroy
+    destroy
   end
 
   protected
@@ -274,8 +262,8 @@ class Game < ActiveRecord::Base
   # Protected - Set the change in ratings for each player, so that
   # the game may be rolled back if necessary.
   def set_rating_changes
-    self.challenged_rating_change = self.challenged_rating.send(:change)
-    self.challenger_rating_change = self.challenger_rating.send(:change)
+    challenged_rating_change = challenged_rating.send(:change)
+    challenger_rating_change = challenger_rating.send(:change)
   end
 
   # Protected - Build a rating object for the challenging player
@@ -305,8 +293,24 @@ class Game < ActiveRecord::Base
 
   private
 
-  def non_negative_score
-    score.split(' : ').map(&:to_i).all? { |score| score >= 0 } if score
+  def set_winner_and_scores(challenger_score, challenged_score)
+    if challenger_score > challenged_score
+      self.winner = challenger
+      self.result = 1.0
+
+      self.winner_score = challenger_score
+      self.loser_score = challenged_score
+    else
+      self.winner = challenged
+      self.result = 0.0
+
+      self.winner_score = challenged_score
+      self.loser_score = challenger_score
+    end
+  end
+
+  def valid_scores
+    [winner_score, loser_score].all? { |score| score >= 11 } if winner_score && loser_score
   end
 
   # Private - Ensures that the challenger is not challenging themselves to boost their
@@ -332,14 +336,12 @@ class Game < ActiveRecord::Base
   # Returns true if an inverse game does not exist, and false
   # if a game does already exist
   def inverse_game_does_not_exist?
-    if self.challenger and self.challenged
-      game = Game.where(
-        complete: false,
-        challenger_id: self.challenged.id,
-        challenged_id: self.challenger.id
-      ).first
+    if challenger && challenged
+      game = Game.where(complete: false, challenger_id: challenged.id, challenged_id: challenger.id).first
 
-      game.nil? ? true : errors.add(:base, I18n.t('game.errors.game_in_progress')); false
+      return true if game.nil?
+      errors.add(:base, I18n.t('game.errors.game_in_progress'))
+      false
     end
   end
 
@@ -354,12 +356,11 @@ class Game < ActiveRecord::Base
   #
   # If a matching record is not found, this record is valid - returns true.
   def in_progress_game_does_not_exist?
-    if self.challenger && self.challenged
-      Game.where(
-        complete: false,
-        challenger_id: self.challenger.id,
-        challenged_id: self.challenged.id
-      ).first.nil? ? true : errors.add(:base, :in_progress_game); false
+    if challenger && challenged
+      game = Game.where(complete: false, challenger_id: challenger.id, challenged_id: challenged.id).first
+      return true if game.nil?
+      errors.add(:base, :in_progress_game)
+      false
     end
   end
 end

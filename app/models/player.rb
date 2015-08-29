@@ -13,11 +13,8 @@ class Player < ActiveRecord::Base
 
   default_scope { where(active: true) }
 
-  devise :database_authenticatable,
-         :recoverable,
-         :trackable,
-         :validatable
-  
+  devise :database_authenticatable, :recoverable, :trackable, :validatable
+
   before_save :ensure_authentication_token
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
@@ -37,18 +34,18 @@ class Player < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
       player.email = auth.info.email
-      player.encrypted_password = Devise.friendly_token[0,20]
+      player.encrypted_password = Devise.friendly_token[0, 20]
       player.name = auth.info.name   # assuming the player model has a name
     end
   end
 
   def nemesis
-    Game.where('winner_id != ?', id).sort_by(&:winner_id).group_by(&:winner_id).each do |potential_nemesis_id, nemesis_won_games|
+    Game.where('winner_id != ?', id).group_by(&:winner_id).each do |potential_nemesis_id, nemesis_won_games|
       player_won_games = Game.where(winner_id: id).where(
         'challenger_id = ? or challenged_id = ?',
         potential_nemesis_id, potential_nemesis_id
       )
-      if nemesis_won_games.size - player_won_games.size > MIN_NEMESIS_WON_GAMES
+      if player_won_games.size != 0 && nemesis_won_games.size - player_won_games.size > MIN_NEMESIS_WON_GAMES
         return Player.find(potential_nemesis_id).name
       end
     end
@@ -68,7 +65,7 @@ class Player < ActiveRecord::Base
   # Returns an array of games where the player was either a challenger or
   # was challenged
   def games(complete = nil)
-    games_scope = Game.where('challenger_id = ? OR challenged_id = ?', self.id, self.id)
+    games_scope = Game.where('challenger_id = ? OR challenged_id = ?', id, id)
     games_scope.includes(:challenged, :challenger)
     games_scope.where('complete = ?', complete) if complete
     games_scope = games_scope.order('created_at DESC')
@@ -83,7 +80,7 @@ class Player < ActiveRecord::Base
   # This value can then be used to display the player's position
   # in the ladder.
   def ranking
-    Player.order('rating DESC').select(:id).map(&:id).index(self.id) + 1
+    Player.order('rating DESC').select(:id).map(&:id).index(id) + 1
   end
 
   # Public - A hook called by devise after a password reset
@@ -94,10 +91,7 @@ class Player < ActiveRecord::Base
   # up to super.
   #
   def after_password_reset
-    if !self.new_record? and self.encrypted_password_changed?
-      self.changed_password = true
-    end
-
+    self.changed_password = true if !new_record? && encrypted_password_changed?
     super
   end
 
@@ -134,7 +128,6 @@ class Player < ActiveRecord::Base
     )
   end
 
-
   # Public - Return the number of games played by this player
   #
   # Returns an integer count of games played by the player
@@ -153,7 +146,7 @@ class Player < ActiveRecord::Base
   # Returns a decimal number representing that players
   # k-factor
   def k_factor
-    if pro? or pro_rating?
+    if pro? || pro_rating?
       Player::PRO_K_FACTOR
     elsif starter?
       Player::STARTER_K_FACTOR
@@ -172,10 +165,10 @@ class Player < ActiveRecord::Base
   # - :down if the player is not improving
   # - :same if the player is neither improving nor unimproving
   def trend
-    won_games_in_last_48_hours = self.won_games.
+    won_games_in_last_48_hours = won_games.
       where('updated_at > ?', DateTime.now - 48.hours).
       count
-    lost_games_in_last_48_hours = self.games.
+    lost_games_in_last_48_hours = games.
       where('updated_at > ?', DateTime.now - 48.hours).count -
       won_games_in_last_48_hours
 
@@ -201,8 +194,7 @@ class Player < ActiveRecord::Base
   #
   # Expiry is a number of days from the award_date for the badge to expire
   def award!(badge, award_date = nil)
-    if !badge.awarded_to?(self) or badge.allow_duplicates
-
+    if !badge.awarded_to?(self) || badge.allow_duplicates
       if badge.expire_in_days != 0
         base_date = award_date.present? ? award_date : DateTime.now
         abs_expiry = base_date.advance(days: badge.expire_in_days)
@@ -210,7 +202,7 @@ class Player < ActiveRecord::Base
         abs_expiry = nil
       end
 
-      self.awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry )
+      awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry)
     end
   end
 
@@ -259,7 +251,7 @@ class Player < ActiveRecord::Base
   def played(game)
     self.rating = game.ratings[self].new_rating
     self.pro = true if pro_rating?
-    self.save
+    save
 
     self
   end

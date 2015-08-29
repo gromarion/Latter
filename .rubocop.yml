@@ -1,0 +1,19 @@
+---
+inherit_from:
+  - .rubocop-common.yml
+
+AllCops:
+  Exclude:
+  - 'db/schema.rb'
+  - 'db/migrate/*.rb'
+  - 'bin/*'
+  - '**/legacy/*.rb'
+  - '**/bundle/**/*'
+  - 'tmp/**/*'
+
+Lint/Void:
+  Exclude: ['**/*_spec.rb']
+
+Metrics/LineLength:
+  Severity: convention
+

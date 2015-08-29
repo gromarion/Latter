@@ -48,6 +48,7 @@ gem 'faraday'
 gem 'pry'
 gem 'hipchat'
 gem 'slim'
+gem 'rubocop'
 
 group :development, :test do
   # Test with rspec-rails

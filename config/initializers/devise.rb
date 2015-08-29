@@ -200,7 +200,7 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
   # config.omniauth :google_oauth2, "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", { }
-  config.omniauth :google_oauth2, "785970535978-est4ikrlfhdjgsh7idh9n26tss9tkut6.apps.googleusercontent.com", "PSj8-XLivAB4xSo84yqetKoQ", { client_options: { ssl: { ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" } } }
+  config.omniauth :google_oauth2, "785970535978-erdjmirbrsuelin6i14rb15rjagrda1f.apps.googleusercontent.com", "zJtODqQj_eNVE2Nsb08NPE2X", { client_options: { ssl: { ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" } } }
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
