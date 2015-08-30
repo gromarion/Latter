@@ -1,10 +1,9 @@
 class GameNotifier
   def self.notify_challenged(game)
-    client = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')
-    client.user(game.challenged.email).send(
+    HIPCHAT_CLIENT.user(game.challenged.email).send(
       "PingPously: You have been challenged by #{game.challenger.name} (pingpong)"
     )
-    room = client['Ping Pong']
+    room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
     challenged_mention = fetch_hipchat_mention(game.challenged, room)
     challenger_mention = fetch_hipchat_mention(game.challenger, room)
     if challenged_mention && challenger_mention
@@ -13,29 +12,29 @@ class GameNotifier
   end
 
   def self.notify_completed_game(game)
-    client = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')
-
     winner = Player.find(game.winner_id)
     loser = fetch_looser(game)
-    room = client['Ping Pong']
+    room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
     winner_mention = fetch_hipchat_mention(winner, room)
     loser_mention = fetch_hipchat_mention(loser, room)
     defeated = fetch_defeated_word(game)
     if winner_mention && loser_mention
       send_to_room(
-        client['Ping Pong'],
+        HIPCHAT_CLIENT['Ping Pong'],
         "@#{winner_mention} #{defeated} @#{loser_mention} #{game.final_score}"
       )
     end
-    client.user(loser.email).send(
+    HIPCHAT_CLIENT.user(loser.email).send(
       "PingPously: You have been #{defeated} by #{winner.name} #{game.final_score}"
     )
-    client.user(winner.email).send("PingPously: You have #{defeated} #{loser.name} #{game.final_score}")
+    HIPCHAT_CLIENT.user(winner.email).send(
+      "PingPously: You have #{defeated} #{loser.name} #{game.final_score}"
+    )
   end
 
   def self.show_off(player)
     if player.ranking >= 1 && player.ranking <= 10
-      room = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')['Ping Pong']
+      room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
       player_mention = fetch_hipchat_mention(player, room)
       room.send('')
     end

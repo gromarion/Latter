@@ -85,4 +85,10 @@ Latter::Application.configure do
     domain:         ENV['SENDGRID_DOMAIN']
   }
   ActionMailer::Base.delivery_method = :smtp
+
+  config.after_initialize do
+    hipchat_config = AppConfiguration.for(:hipchat)
+    ::HIPCHAT_CLIENT = HipChat::Client.new(hipchat_config.token, api_version: 'v2')
+    ::PING_PONG_ROOM_NAME = hipchat_config.ping_pong_room_name
+  end
 end

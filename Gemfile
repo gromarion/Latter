@@ -43,6 +43,7 @@ gem 'pry'
 gem 'hipchat'
 gem 'rubocop'
 gem 'figaro'
+gem 'app_configuration'
 
 group :development, :test do
   # Test with rspec-rails

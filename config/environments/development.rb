@@ -35,4 +35,10 @@ Latter::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { address: 'localhost', port: 1025, domain: 'Latter.dev' }
+
+  config.after_initialize do
+    hipchat_config = AppConfiguration.for(:hipchat)
+    ::HIPCHAT_CLIENT = HipChat::Client.new(hipchat_config.token, api_version: 'v2')
+    ::PING_PONG_ROOM_NAME = hipchat_config.ping_pong_room_name
+  end
 end

@@ -93,7 +93,8 @@ class PlayersController < ApplicationController
         :email,
         :wants_challenge_completed_notifications,
         :name,
-        :image_url
+        :image_url,
+        :mention
       )
     end
 
