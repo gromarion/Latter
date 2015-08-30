@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
+  skip_before_filter :verify_signed_out_user
   before_filter :set_locale
-
   # Public: Override default_url_options to automatically mixin the current
   # locale. This ensures that links always have the correct locale set,
   # regardless of whether the actual link_to has it or not.

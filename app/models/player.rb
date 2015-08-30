@@ -13,10 +13,7 @@ class Player < ActiveRecord::Base
 
   default_scope { where(active: true) }
 
-  devise :database_authenticatable, :recoverable, :trackable, :validatable
-
-  before_save :ensure_authentication_token
-
+  devise :trackable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   validates_presence_of :name, allow_blank: false
@@ -34,7 +31,6 @@ class Player < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
       player.email = auth.info.email
-      player.encrypted_password = Devise.friendly_token[0, 20]
       player.name = auth.info.name   # assuming the player model has a name
     end
   end
@@ -50,14 +46,6 @@ class Player < ActiveRecord::Base
       end
     end
     nil
-  end
-
-  def self.new_with_session(params, session)
-    super.tap do |player|
-      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
-        player.email = data['email'] if player.email.blank?
-      end
-    end
   end
 
   # Public - Return all games that a player has participated in
@@ -81,18 +69,6 @@ class Player < ActiveRecord::Base
   # in the ladder.
   def ranking
     Player.order('rating DESC').select(:id).map(&:id).index(id) + 1
-  end
-
-  # Public - A hook called by devise after a password reset
-  #
-  # We use this method to update our own password_changed? boolean
-  # if the record is not new (i.e. someone hasn't just registered or something),
-  # and the encrypted_password field has changed. We then delegate the action
-  # up to super.
-  #
-  def after_password_reset
-    self.changed_password = true if !new_record? && encrypted_password_changed?
-    super
   end
 
   # Public - Calculate whether this player is a rookie
@@ -203,37 +179,6 @@ class Player < ActiveRecord::Base
       end
 
       awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry)
-    end
-  end
-
-  def ensure_authentication_token
-    if authentication_token.blank?
-      self.authentication_token = generate_authentication_token
-    end
-  end
-
-  private
-
-  def generate_authentication_token
-    loop do
-      token = Devise.friendly_token
-      break token unless Player.exists?(authentication_token: token)
-    end
-  end
-
-  # Private - Set a default password for the user
-  #
-  # Because only existing players can add new players, we want to
-  # avoid the situation where a player adds a new player, and then has to
-  # think up a password, enter it, and then say "your password is x".
-  #
-  # Instead, we set a default secure password to the account, and then
-  # get them to set their password the first time they log in
-  # (see ApplicationController)
-  def set_default_password
-    Devise.friendly_token[0..20].tap do |pass|
-      self.password = pass
-      self.password_confirmation = pass
     end
   end
 

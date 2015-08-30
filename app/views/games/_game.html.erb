@@ -10,7 +10,7 @@
     <div class='pull-left vs'>
       <h4>vs.</h4>
       <div class="label label-info">
-        <%= game.complete? ? I18n.t('game.index.completed', score: game.score) : I18n.t('game.index.challenged') %>
+        <%= game.complete? ? I18n.t('game.index.completed', score: game.final_score) : I18n.t('game.index.challenged') %>
         <br />
       </div>
     </div>

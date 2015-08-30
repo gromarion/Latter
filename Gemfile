@@ -17,9 +17,6 @@ gem 'public_activity'
 # Implementation of the Elo ranking algorithm
 gem 'elo'
 
-# Helper functions for rendering Gravatars
-gem 'gravtastic'
-
 # Perform authentication with Devise
 gem 'devise'
 
@@ -33,9 +30,6 @@ gem 'ransack'
 # Use Coffeescript for writing Javascript
 gem 'coffee-rails'
 
-# Compress assets when precompiling.
-gem 'uglifier'
-
 # Applications uses jQuery for AJAX and display.
 gem 'jquery-rails'
 
@@ -47,7 +41,6 @@ gem 'omniauth-google-oauth2'
 gem 'faraday'
 gem 'pry'
 gem 'hipchat'
-gem 'slim'
 gem 'rubocop'
 
 group :development, :test do
@@ -78,7 +71,7 @@ group :test do
   gem 'database_cleaner'
 
   # Generate test coverage report.
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 end
 
 # This gem group ensures Heroku compatibility
@@ -86,4 +79,3 @@ group :production do
   gem 'rails_12factor'
   gem 'passenger'
 end
-

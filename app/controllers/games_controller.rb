@@ -1,7 +1,5 @@
 
 class GamesController < ApplicationController
-  include TokenAuthenticatable
-  before_filter :authenticate_player!
   respond_to :html, :js, :json
 
   # GET /games

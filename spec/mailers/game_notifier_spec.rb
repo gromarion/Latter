@@ -24,7 +24,7 @@ describe GameNotifier do
       @game = game
       @game.winner = @game.challenger
       @game.result = 1.0
-      @game.score = "21 : 15"
+      @game.final_score = "21 : 15"
       @game.complete = true
 
       @mail = GameNotifier.completed_game(@game)

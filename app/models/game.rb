@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
   validate :inverse_game_does_not_exist?
   validate :in_progress_game_does_not_exist?, on: :create
   validate :challenger_and_challenged_are_not_the_same
-  validate :valid_score
+  validate :valid_scores
 
   scope :complete, -> { where(complete: true) }
 
@@ -37,6 +37,10 @@ class Game < ActiveRecord::Base
   set_callback :complete, :after do
     create_activity(key: 'game.completed', owner: winner)
     GameNotifier.notify_completed_game(self)
+  end
+
+  def final_score
+    "#{winner_score} : #{loser_score}"
   end
 
   # Public - result setter

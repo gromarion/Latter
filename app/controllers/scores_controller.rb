@@ -1,6 +1,4 @@
 class ScoresController < ApplicationController
-  include TokenAuthenticatable
-  before_filter :authenticate_player!
 
   # GET /games/1/score/new
   def new

@@ -1,6 +1,4 @@
 class StatisticsController < ApplicationController
-  include TokenAuthenticatable
-  before_filter :authenticate_player!
   respond_to :html, :json
 
   def index

@@ -1,34 +1,28 @@
 class DeviseCreatePlayers < ActiveRecord::Migration
   def change
     create_table(:players) do |t|
-      ## Database authenticatable
-      t.string :email,              :null => false, :default => ""
-      t.string :encrypted_password, :null => false, :default => ""
+      t.string :email, null: false, default: ''
 
-      ## Recoverable
-      t.string   :reset_password_token
-      t.datetime :reset_password_sent_at
+      t.string :name, null: false
+      t.integer :rating, null: false, default: Elo.config.default_rating
+      t.boolean :pro, null: false, default: false
+      t.boolean :starter, null: false, default: true
 
-      ## Rememberable
-      t.datetime :remember_created_at
+      t.string :image_url
+      t.boolean :active, default: true, null: false
+      t.string :provider
+      t.string :uid
 
-      ## Trackable
-      t.integer  :sign_in_count, :default => 0
+      t.integer  :sign_in_count, default: 0
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
 
-
-      t.string :name, :null => false
-      t.integer :rating, :null => false, :default => Elo.config.default_rating
-      t.boolean :pro, :null => false, :default => false
-      t.boolean :starter, :null => false, :default => true
-
       t.timestamps
     end
 
-    add_index :players, :email,                :unique => true
-    add_index :players, :reset_password_token, :unique => true
+    add_index :players, :email,                unique: true
+    add_index :players, :active
   end
 end

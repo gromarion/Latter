@@ -1,7 +1,5 @@
 
 class PlayersController < ApplicationController
-  include TokenAuthenticatable
-  before_filter :authenticate_player!, :except => :index
 
   # GET /players
   # GET /players.json

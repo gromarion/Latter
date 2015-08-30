@@ -18,5 +18,5 @@ json.cache! game do
   end
 
   json.winner_id game.winner_id
-  json.score game.score
+  json.score game.final_score
 end

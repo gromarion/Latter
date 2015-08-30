@@ -1,7 +1,4 @@
 class BadgesController < ApplicationController
-  include TokenAuthenticatable
-  before_filter :authenticate_player!
-
   def index
     @badges = Badge.all
     render stream: true

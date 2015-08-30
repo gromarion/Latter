@@ -20,22 +20,24 @@ class GameNotifier
     room = client['Ping Pong']
     winner_mention = fetch_hipchat_mention(winner, room)
     loser_mention = fetch_hipchat_mention(loser, room)
-    defeated = fetch_defeated_word(game.score)
+    defeated = fetch_defeated_word(game)
     if winner_mention && loser_mention
       send_to_room(
         client['Ping Pong'],
-        "@#{winner_mention} #{defeated} @#{loser_mention} #{game.score}"
+        "@#{winner_mention} #{defeated} @#{loser_mention} #{game.final_score}"
       )
     end
-    client.user(loser.email).send("PingPously: You have been #{defeated} by #{winner.name} #{game.score}")
-    client.user(winner.email).send("PingPously: You have #{defeated} #{loser.name} #{game.score}")
+    client.user(loser.email).send(
+      "PingPously: You have been #{defeated} by #{winner.name} #{game.final_score}"
+    )
+    client.user(winner.email).send("PingPously: You have #{defeated} #{loser.name} #{game.final_score}")
   end
 
   def self.show_off(player)
     if player.ranking >= 1 && player.ranking <= 10
       room = HipChat::Client.new("Wn2YmsDS5mPgnljLdst2u5zAGhhuMTKTJVQARn4J", api_version: 'v2')['Ping Pong']
       player_mention = fetch_hipchat_mention(player, room)
-      room.send("")
+      room.send('')
     end
   end
 
@@ -57,9 +59,8 @@ class GameNotifier
     Player.find(([game.challenged_id, game.challenger_id] - [game.winner_id]).first)
   end
 
-  def self.fetch_defeated_word(score)
-    scores = score.split(' : ').map(&:to_i)
-    score_difference = scores.max - scores.min
+  def self.fetch_defeated_word(game)
+    score_difference = game.winner_score - game.loser_score
     if (score_difference <= 5)
       'defeated'
     elsif (score_difference <= 10)

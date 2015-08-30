@@ -3,6 +3,8 @@ class CreateAwards < ActiveRecord::Migration
     create_table :awards do |t|
       t.references :player
       t.references :badge
+      t.datetime :award_date
+      t.datetime :expiry
 
       t.timestamps
     end

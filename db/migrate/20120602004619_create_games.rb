@@ -1,11 +1,16 @@
 class CreateGames < ActiveRecord::Migration
   def change
     create_table :games do |t|
-      t.references :challenger, :null => false
-      t.references :challenged, :null => false
-      t.boolean :complete, :null => false, :default => false
+      t.references :challenger, null: false
+      t.references :challenged, null: false
+      t.boolean :complete, null: false, default: false
       t.float :result
-      t.string :score
+      t.integer :winner_score
+      t.integer :loser_score
+
+      t.decimal :challenger_rating_change
+      t.decimal :challenged_rating_change
+      t.references :winner
 
       t.timestamps
     end
