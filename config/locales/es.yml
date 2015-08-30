@@ -1,0 +1,107 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+es:
+  activerecord:
+    attributes:
+      player:
+        email: Email
+  navbar:
+    links:
+      players: 'Players'
+      home: 'Home'
+      all_players: 'Ranking'
+      edit_account: Me
+      new_player: New Player
+      games: Partidos
+      about: Información
+      rules: Reglas
+      badges: Medallas
+      statistics: Estadisticas
+      log_out: Cerrar sesión
+      language: Idioma
+  sessions:
+    new:
+      heading: Iniciar sesión en PingPously
+      submit_button: Iniciar sesión
+  brand:
+    title: PingPously
+  badges:
+    index:
+      heading: Medallas
+      table_headings:
+        badge_image: Imagen
+        name: Nombre
+        details: Detalles
+        awarded_to: Entregada a
+  page:
+    not_found: Página no encontrada
+  player:
+    none:
+      heading: No hay jugadores
+      message: No hay jugadores registrados actualmente. Inicia sesión ahora y comienza a jugar!
+    profile:
+      games: 'Partidos: %{count}'
+      nemesis: Mi Nemesis
+    games:
+      heading: Últimos 20 partidos
+    form:
+      hipchat_mention: Mención de Hipchat
+      save: Guardar Cambios
+      cancel: Cancelar
+    update:
+      success: Los datos fueron actualizados exitosamente.
+    game_last_played: "Ultimo partido jugado hace %{distance}"
+    points: 'Puntos: %{points}'
+    edit:
+      link: Editar Perfil
+      heading: Editar Perfil
+    view: Ver Perfil
+    attributes:
+      image_url: "URL de imagen de perfil"
+  trend:
+    improving: Mejorando en las últimas 48 horas
+    worsening: Empeorando en las últimas 48 horas
+  score:
+    new:
+      heading: Introducir Puntaje
+      submit: Guardar Puntaje
+      submit_loading: Guardando Puntaje...
+  game:
+    notifications:
+      completed_game: ''
+      new_game: ''
+    new:
+      success: Partido creado exitosamente!
+      failure: No se pudo crear el partido
+      link: Desafiar
+      link_loading: Desafiando...
+    complete:
+      saved: Partido completado.
+      unsaved: El partido no pudo ser guardado. Por favor intente nuevamente.
+      link: Introducir Puntaje
+      link_loading: Completando...
+    index:
+      heading: Todos los Partidos
+      challenged: Desafiado
+      completed: 'Completado (%{score})'
+    result:
+      won: ganó!
+      lost: perdió!
+    none:
+      heading: No hay partidos
+      message: No hay partidos en la base de datos en este momento. Se mostrarán al momento que se completen los desafíos.
+  statistics:
+    challenged_count:
+      heading: Partidos Ofensivos por Jugador
+    challenger_count:
+      heading: Partidos Defensivos por Jugador
+    monthly_games:
+      heading: Partidos Este Mes
+    weekly_games:
+      heading: Partidos Esta Semana
+  shared:
+    version: 'Versión: %{version}'
+    form_errors:
+      heading:
+        '%{prefix} previno que este %{name} se guardara'

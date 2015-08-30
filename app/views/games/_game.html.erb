@@ -5,6 +5,9 @@
       <div class="thumbnail">
        <%= image_tag image_for(game.winner), size: '180', size: '180x180' %>
       </div>
+      <span class="user-name-box">
+        <%= game.winner.name %>
+      </span>
     </div>
 
     <div class='pull-left vs'>
@@ -17,8 +20,11 @@
 
     <div class="player pull-left">
       <div class="thumbnail">
-       <%= image_tag image_for(game.loser), size: '180', size: '180x180' %>
+        <%= image_tag image_for(game.loser), size: '180', size: '180x180' %>
       </div>
+      <span>
+        <%= game.loser.name %>
+      </span>
     </div>
   </div>
   <% end %>

@@ -65,11 +65,7 @@ class Game < ActiveRecord::Base
   #
   # Returns the calculated game object
   def calculate
-    if result
-      [challenger, challenged].each do |player|
-        player.send(:played, self)
-      end
-    end
+    [challenger, challenged].each { |player| player.send(:played, self) } if result
 
     self
   end

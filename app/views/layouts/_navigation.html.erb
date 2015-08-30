@@ -1,13 +1,28 @@
 <div class="navbar navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container-fixer clearfix"> 
-				<%= link_to I18n.t('brand.title'), root_url, :class => 'latter brand' %>
-
+				<%= link_to I18n.t('brand.title'), root_url, class: 'latter brand' %>
 				<%= player_navigation %>
 
-				<div class="pull-right">
-					<%= anonymous_navigation %>
-				</div>
+        <div class="pull-right">
+          <ul class='nav'>
+            <li class="dropdown">
+              <%= link_to '#', :"data-toggle" => 'dropdown' do %>
+              <%= I18n.t('navbar.links.language') %>
+              <b class="caret"></b>
+              <% end %>
+
+              <ul class="dropdown-menu">
+                <% %w[en es].each do |locale| %>
+                  <li class=<%= I18n.locale == locale ? 'active' : 'inactive'%>>
+                    <%= link_to locale.to_s.upcase, { locale: locale.to_s } %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
 		</div>
 	</div>
 </div>
