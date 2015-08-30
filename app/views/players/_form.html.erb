@@ -19,6 +19,11 @@
       <%= form.text_field :image_url, class: 'input-xxlarge' %>
     </div>
 
+    <div class="control-group">
+      <%= form.label I18n.t('player.form.hipchat_mention') %>
+      <%= form.text_field :mention, class: 'input-xxlarge' %>
+    </div>
+
     <div class="form-actions">
       <%= form.submit I18n.t('player.form.save'), class: 'btn btn-primary' %>
       <%= link_to I18n.t('player.form.cancel'), root_path, class: 'btn' %>

@@ -53,6 +53,7 @@ en:
     games:
       heading: Last 20 Games
     form:
+      hipchat_mention: 'Hipchat Mention'
       save: 'Save Changes'
       cancel: 'Cancel'
     new:

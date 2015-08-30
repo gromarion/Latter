@@ -7,7 +7,6 @@ class Players::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @player = Player.from_omniauth(auth_details)
 
       sign_in_and_redirect @player, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
     else
       render text: "We're sorry, at this time we do not allow access to our app."
     end

@@ -31,7 +31,8 @@ class Player < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
       player.email = auth.info.email
-      player.name = auth.info.name   # assuming the player model has a name
+      player.name = auth.info.name
+      player.image_url = auth.info.image
     end
   end
 

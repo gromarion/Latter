@@ -1,11 +1,11 @@
 <%= form_for @player do |form| %>
-  <%= render :partial => 'form', :object => form %>
+  <%= render partial: 'form', object: form %>
 <% end %>
 
 
 <%= content_for :sidebar do %>
   <div class="hide">
-  <%= render :partial => 'profile', :locals => {:player => @player} %>
+  <%= render partial: 'profile', locals: { player: @player } %>
   </div>
 <% end %>
 

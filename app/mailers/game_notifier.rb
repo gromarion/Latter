@@ -44,11 +44,12 @@ class GameNotifier
   private
 
   def self.fetch_hipchat_mention(player, room)
+    return player.mention if player.mention
     player_name = I18n.transliterate(player.name).downcase
-    room.get_room()['participants'].each do |participant|
+    room.get_room['participants'].each do |participant|
       return participant['mention_name'] if I18n.transliterate(participant['name']).downcase == player_name
     end
-    return player_name
+    player_name
   end
 
   def self.send_to_room(room, message)
