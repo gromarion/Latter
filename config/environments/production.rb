@@ -44,11 +44,11 @@ Latter::Application.configure do
   # Use a different cache store in production
 
   # Configure Rack::Cache
-  #config.action_dispatch.rack_cache = {
+  # config.action_dispatch.rack_cache = {
   #  :metastore    => Dalli::Client.new,
   #  :entitystore  => 'file:tmp/cache/rack/body',
   #  :allow_reload => false
-  #}
+  # }
 
   config.cache_store = :dalli_store
 
@@ -57,7 +57,7 @@ Latter::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
-  config.assets.precompile += %w( font-awesome-ie7.min.css )
+  config.assets.precompile += %w[font-awesome-ie7.min.css]
 
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = false
@@ -73,16 +73,16 @@ Latter::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => ENV['APPLICATION_HOST'] }
+  config.action_mailer.default_url_options = { host: ENV['APPLICATION_HOST'] }
   config.action_mailer.asset_host = "http://#{ENV['APPLICATION_HOST']}"
 
   ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => ENV['SENDGRID_DOMAIN']
+    address:        'smtp.sendgrid.net',
+    port:           '587',
+    authentication: :plain,
+    user_name:      ENV['SENDGRID_USERNAME'],
+    password:       ENV['SENDGRID_PASSWORD'],
+    domain:         ENV['SENDGRID_DOMAIN']
   }
   ActionMailer::Base.delivery_method = :smtp
 end
