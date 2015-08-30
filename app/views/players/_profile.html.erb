@@ -1,13 +1,13 @@
 <% cache [player, "profile"] do %>
 <div class="profile">
 
-  <div class="row-fluid player" id="player_3" data-rating="1033">
+  <div class="row-fluid player">
     <div class="avatar-box">
-    <div class="ranking_display">
-      <div class="label label-important ranking">
-        <%= ranking(player) %>
+      <div class="ranking_display">
+        <div class="label label-important ranking">
+          <%= ranking(player) %>
+        </div>
       </div>
-    </div>
 
       <div class="thumbnail">
         <%= image_tag image_for(player), size: 300, title: player.name %>
@@ -45,7 +45,7 @@
           <%= link_to edit_player_path(player), class: 'link' do %>
             <i class=" "></i>Edit Profile</a>
           <% end %>
-          <%= link_to I18n.t('navbar.links.log_out'), destroy_player_session_path, class: 'link', :method => :delete %>
+          <%= link_to I18n.t('navbar.links.log_out'), destroy_player_session_path, class: 'link', method: :delete %>
         </div>
     </div>
   </div>

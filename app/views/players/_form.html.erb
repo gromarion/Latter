@@ -4,6 +4,8 @@
 
     <%= render partial: 'shared/form_errors', locals: { form: form } %>
 
+    <%= image_tag form.object.image_url, size: 300, class: 'form-avatar' %>
+
     <div class="control-group">
       <%= form.label :name %>
       <%= form.text_field :name, class: 'input-xxlarge' %>
