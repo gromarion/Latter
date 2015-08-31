@@ -33,12 +33,16 @@ Latter::Application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.asset_host = 'http://localhost:3000'
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025, domain: 'Latter.dev' }
-
   config.after_initialize do
     hipchat_config = AppConfiguration.for(:hipchat)
     ::HIPCHAT_CLIENT = HipChat::Client.new(hipchat_config.token, api_version: 'v2')
     ::PING_PONG_ROOM_NAME = hipchat_config.ping_pong_room_name
+
+    pingpously_config = AppConfiguration.for(:pingpously_config)
+    ::NEMESIS_REQUIRED_WON_GAMES = pingpously_config.nemesis_required_won_games.to_i
+    ::LEVEL_1_MAX_POINTS = pingpously_config.level_1_max_points.to_i
+    ::LEVEL_2_MAX_POINTS = pingpously_config.level_2_max_points.to_i
+    ::LEVEL_3_MAX_POINTS = pingpously_config.level_3_max_points.to_i
+    ::LEVEL_4_MAX_POINTS = pingpously_config.level_4_max_points.to_i
   end
 end

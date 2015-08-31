@@ -22,7 +22,7 @@ module PlayersHelper
         class: 'tooltip trend'
       )
     else
-      ""
+      ''
     end
   end
 
@@ -32,14 +32,16 @@ module PlayersHelper
   end
 
   def level_image_for(player)
-    if player.rating < 1100
-      "/assets/images/badge-newbie.png"
-    elsif player.rating < 1200
-      "/assets/images/badge-badass.png"
-    elsif player.rating < 1300
-      "/assets/images/badge-ninja.png"
+    if player.rating < LEVEL_1_MAX_POINTS
+      '/assets/images/badge-newbie.png'
+    elsif player.rating < LEVEL_2_MAX_POINTS
+      '/assets/images/badge-badass.png'
+    elsif player.rating < LEVEL_3_MAX_POINTS
+      '/assets/images/badge-ninja.png'
+    elsif player.rating < LEVEL_4_MAX_POINTS
+      '/assets/images/badge-respect.png'
     else
-      "/assets/images/badge-respect.png"
+      '/assets/images/badge-respect.png'
     end
   end
 
@@ -54,7 +56,7 @@ module PlayersHelper
     element = content_tag(
       :span,
       distance_of_time_in_words_to_now(last_game.updated_at),
-      title: last_game.updated_at.strftime("%c")
+      title: last_game.updated_at.strftime('%c')
     )
     I18n.t('player.game_last_played', distance: element).html_safe
   end

@@ -76,19 +76,16 @@ Latter::Application.configure do
   config.action_mailer.default_url_options = { host: ENV['APPLICATION_HOST'] }
   config.action_mailer.asset_host = "http://#{ENV['APPLICATION_HOST']}"
 
-  ActionMailer::Base.smtp_settings = {
-    address:        'smtp.sendgrid.net',
-    port:           '587',
-    authentication: :plain,
-    user_name:      ENV['SENDGRID_USERNAME'],
-    password:       ENV['SENDGRID_PASSWORD'],
-    domain:         ENV['SENDGRID_DOMAIN']
-  }
-  ActionMailer::Base.delivery_method = :smtp
-
   config.after_initialize do
     hipchat_config = AppConfiguration.for(:hipchat)
     ::HIPCHAT_CLIENT = HipChat::Client.new(hipchat_config.token, api_version: 'v2')
     ::PING_PONG_ROOM_NAME = hipchat_config.ping_pong_room_name
+
+    pingpously_config = AppConfiguration.for(:pingpously)
+    ::NEMESIS_REQUIRED_WON_GAMES = pingpously_config.nemesis_required_won_games
+    ::LEVEL_1_MAX_POINTS = pingpously_config.level_1_max_points
+    ::LEVEL_2_MAX_POINTS = pingpously_config.level_2_max_points
+    ::LEVEL_3_MAX_POINTS = pingpously_config.level_3_max_points
+    ::LEVEL_4_MAX_POINTS = pingpously_config.level_4_max_points
   end
 end
