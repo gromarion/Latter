@@ -37,12 +37,13 @@ class Player < ActiveRecord::Base
   end
 
   def nemesis
-    Game.where('winner_id != ?', id).group_by(&:winner_id).each do |potential_nemesis_id, nemesis_won_games|
+    Game.where('winner_id != ? AND (challenger_id = ? OR challenged_id = ?)', id, id, id).
+      group_by(&:winner_id).each do |potential_nemesis_id, nemesis_won_games|
       player_won_games = Game.where(winner_id: id).where(
         'challenger_id = ? or challenged_id = ?',
         potential_nemesis_id, potential_nemesis_id
       )
-      if player_won_games.size != 0 && nemesis_won_games.size - player_won_games.size > MIN_NEMESIS_WON_GAMES
+      if nemesis_won_games.size - player_won_games.size > MIN_NEMESIS_WON_GAMES
         return Player.find(potential_nemesis_id).name
       end
     end
