@@ -262,8 +262,8 @@ class Game < ActiveRecord::Base
   # Protected - Set the change in ratings for each player, so that
   # the game may be rolled back if necessary.
   def set_rating_changes
-    challenged_rating_change = challenged_rating.send(:change)
-    challenger_rating_change = challenger_rating.send(:change)
+    self.challenged_rating_change = challenged_rating.send(:change)
+    self.challenger_rating_change = challenger_rating.send(:change)
   end
 
   # Protected - Build a rating object for the challenging player
@@ -336,13 +336,12 @@ class Game < ActiveRecord::Base
   # Returns true if an inverse game does not exist, and false
   # if a game does already exist
   def inverse_game_does_not_exist?
-    if challenger && challenged
-      game = Game.where(complete: false, challenger_id: challenged.id, challenged_id: challenger.id).first
+    return unless challenger && challenged
+    game = Game.where(complete: false, challenger_id: challenged.id, challenged_id: challenger.id).first
 
-      return true if game.nil?
-      errors.add(:base, I18n.t('game.errors.game_in_progress'))
-      false
-    end
+    return true if game.nil?
+    errors.add(:base, I18n.t('game.errors.game_in_progress'))
+    false
   end
 
   # Private: Checks for the existence of a game already in progress.
@@ -356,11 +355,10 @@ class Game < ActiveRecord::Base
   #
   # If a matching record is not found, this record is valid - returns true.
   def in_progress_game_does_not_exist?
-    if challenger && challenged
-      game = Game.where(complete: false, challenger_id: challenger.id, challenged_id: challenged.id).first
-      return true if game.nil?
-      errors.add(:base, :in_progress_game)
-      false
-    end
+    return unless challenger && challenged
+    game = Game.where(complete: false, challenger_id: challenger.id, challenged_id: challenged.id).first
+    return true if game.nil?
+    errors.add(:base, :in_progress_game)
+    false
   end
 end

@@ -171,16 +171,16 @@ class Player < ActiveRecord::Base
   #
   # Expiry is a number of days from the award_date for the badge to expire
   def award!(badge, award_date = nil)
-    if !badge.awarded_to?(self) || badge.allow_duplicates
-      if badge.expire_in_days != 0
-        base_date = award_date.present? ? award_date : DateTime.now
-        abs_expiry = base_date.advance(days: badge.expire_in_days)
-      else
-        abs_expiry = nil
-      end
+    return unless !badge.awarded_to?(self) || badge.allow_duplicates
 
-      awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry)
+    if badge.expire_in_days != 0
+      base_date = award_date.present? ? award_date : DateTime.now
+      abs_expiry = base_date.advance(days: badge.expire_in_days)
+    else
+      abs_expiry = nil
     end
+
+    awards.create(badge_id: badge.id, award_date: award_date, expiry: abs_expiry)
   end
 
   # Private - Update player ratings based on the result

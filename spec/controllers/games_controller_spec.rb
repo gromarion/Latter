@@ -25,12 +25,12 @@ describe GamesController do
   # Game. As you add validations to Game, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { :challenged_id => FactoryGirl.create(:player).id }
+    { challenged_id: FactoryGirl.create(:player).id }
   end
 
   describe "GET index" do
     it "assigns all games as @games" do
-      game = FactoryGirl.create :game, :complete => true
+      game = FactoryGirl.create :game, complete: true
       get :index, {}
       expect(assigns(:games)).to eq([game])
     end
@@ -43,28 +43,27 @@ describe GamesController do
     end
   end
 
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Game" do
         expect {
-          post :create, {:game => valid_attributes}
+          post :create, game: valid_attributes
         }.to change(Game, :count).by(1)
       end
 
       it "assigns a newly created game as @game" do
-        post :create, {:game => valid_attributes}
+        post :create, game: valid_attributes
         expect(assigns(:game)).to be_a(Game)
         expect(assigns(:game)).to be_persisted
       end
 
       it "redirects to the players page" do
-        post :create, {:game => valid_attributes}
+        post :create, game: valid_attributes
         expect(response).to redirect_to(Player)
       end
 
       it "renders JSON template if requesting with JSON" do
-        post :create, {:game => valid_attributes, :format => :json}
+        post :create, game: valid_attributes, format: :json
         expect(response).to render_template :show
       end
 
@@ -74,14 +73,14 @@ describe GamesController do
       it "assigns a newly created but unsaved game as @game" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Game).to receive(:save).and_return(false)
-        post :create, {:game => {}}
+        post :create, game: {}
         expect(assigns(:game)).to be_a_new(Game)
       end
 
       it "redirects to the root page with an error message" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Game).to receive(:save).and_return(false)
-        post :create, {:game => {}}
+        post :create, game: {}
         expect(response).to redirect_to root_path
         expect(flash[:alert]).not_to be_blank
       end
@@ -90,15 +89,15 @@ describe GamesController do
 
   describe "DELETE destroy" do
     it "destroys the requested game" do
-      game = FactoryGirl.create :game, :challenged => controller.current_player
+      game = FactoryGirl.create :game, challenged: controller.current_player
       expect {
-        delete :destroy, {:id => game.to_param}
+        delete :destroy, id: game.to_param
       }.to change(Game, :count).by(-1)
     end
 
     it "redirects to the games list" do
-      game = FactoryGirl.create(:game, :challenged => controller.current_player)
-      delete :destroy, {:id => game.to_param}
+      game = FactoryGirl.create(:game, challenged: controller.current_player)
+      delete :destroy, id: game.to_param
       expect(response).to redirect_to(games_url)
     end
   end

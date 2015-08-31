@@ -22,7 +22,7 @@ describe BadgesController do
 
   describe "GET show" do
     before do
-      get :show, :id => badge.id
+      get :show, id: badge.id
     end
 
     it "should assign the badge to @badge" do

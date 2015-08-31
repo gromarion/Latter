@@ -5,5 +5,4 @@ module ActivityAdapter
   def self.all
     PublicActivity::Activity.limit(@@collection_size)
   end
-
 end

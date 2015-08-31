@@ -29,11 +29,10 @@ module ApplicationHelper
   end
 
   def travis_badge
-    if Latter::Application.config.try(:travis_ci_id)
-      url = "https://travis-ci.org/#{Latter::Application.config.travis_ci_id}"
-      link_to url do
-        image_tag url + ".png"
-      end
+    return unless Latter::Application.config.try(:travis_ci_id)
+    url = "https://travis-ci.org/#{Latter::Application.config.travis_ci_id}"
+    link_to url do
+      image_tag url + ".png"
     end
   end
 end

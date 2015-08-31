@@ -1,5 +1,4 @@
 module PlayersHelper
-
   def ranking(player)
     content_tag(:div, class: 'label label-important ranking') do
       (player.ranking.to_s + trend(player)).html_safe
@@ -51,14 +50,13 @@ module PlayersHelper
   def distance_of_last_game_for(player)
     last_game = player.games.order('updated_at DESC').first
 
-    if last_game
-      element = content_tag(
-        :span,
-        distance_of_time_in_words_to_now(last_game.updated_at),
-        title: last_game.updated_at.strftime("%c")
-      )
-      I18n.t('player.game_last_played', distance: element).html_safe
-    end
+    return unless last_game
+    element = content_tag(
+      :span,
+      distance_of_time_in_words_to_now(last_game.updated_at),
+      title: last_game.updated_at.strftime("%c")
+    )
+    I18n.t('player.game_last_played', distance: element).html_safe
   end
 
   def link_to_primary_action_for(player)
@@ -66,7 +64,7 @@ module PlayersHelper
       link_to edit_player_path(player), class: 'link' do
         content_tag(:i, '', class: ' ') + I18n.t('player.edit.link')
       end
-    elsif current_player and !current_player.in_progress_games(player).empty?
+    elsif current_player && current_player.in_progress_games(player).present?
       enter_score_options = {
         remote: true,
         data: { disable_with: I18n.t('game.complete.link_loading') },
@@ -89,5 +87,4 @@ module PlayersHelper
       end
     end
   end
-
 end

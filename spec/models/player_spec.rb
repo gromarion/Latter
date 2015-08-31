@@ -37,33 +37,33 @@ describe Player do
 
   describe "Associations" do
     it "should have challenged games" do
-      game = FactoryGirl.create(:game, :challenged => subject)
+      game = FactoryGirl.create(:game, challenged: subject)
       expect(subject.challenged_games).to eq [game]
     end
 
     it "should have challenger games" do
-      game = FactoryGirl.create(:game, :challenger => subject)
+      game = FactoryGirl.create(:game, challenger: subject)
       expect(subject.challenger_games).to eq [game]
     end
 
     it "should have won games" do
-      game = FactoryGirl.create(:game, :challenger => subject, :winner => subject)
+      game = FactoryGirl.create(:game, challenger: subject, winner: subject)
       expect(subject.won_games).to eq [game]
     end
 
     it "should show all completed games" do
-      FactoryGirl.create_list(:game, 5, :complete => true, :challenged => subject)
+      FactoryGirl.create_list(:game, 5, complete: true, challenged: subject)
       expect(subject.games(true).size).to eq 5
     end
 
     it "should show all games" do
-      FactoryGirl.create_list(:game, 5, :complete => false, :challenged => subject)
+      FactoryGirl.create_list(:game, 5, complete: false, challenged: subject)
       expect(subject.games.size).to eq 5
     end
 
     it "should return in progress games for a given player" do
       player = FactoryGirl.create(:player)
-      game = FactoryGirl.create(:game, :complete => false, :challenged => player, :challenger => subject)
+      game = FactoryGirl.create(:game, complete: false, challenged: player, challenger: subject)
       expect(subject.in_progress_games(player)).to eq [game]
     end
   end
@@ -71,10 +71,10 @@ describe Player do
   describe "Badges" do
 
     before do
-       subject.save
-       @badge = FactoryGirl.create(:badge)
-       @award = subject.award!(@badge)
-       # @award = FactoryGirl.create(:award, :player => subject, :badge => @badge)
+      subject.save
+      @badge = FactoryGirl.create(:badge)
+      @award = subject.award!(@badge)
+      # @award = FactoryGirl.create(:award, :player => subject, :badge => @badge)
     end
 
     it "should be able to be assigned correctly" do
@@ -114,13 +114,13 @@ describe Player do
 
   describe "Starter rating" do
     it "should be a starter if the player has played less than 30 games" do
-      games = FactoryGirl.build_list(:game, 29, :challenger => subject)
+      games = FactoryGirl.build_list(:game, 29, challenger: subject)
       allow(subject).to receive(:games).and_return(games)
       expect(subject.starter?).to be_truthy
     end
 
     it "should not be a starter if the player has played more than 30 games" do
-      games = FactoryGirl.build_list(:game, 31, :challenger => subject)
+      games = FactoryGirl.build_list(:game, 31, challenger: subject)
       allow(subject).to receive(:games).and_return(games)
       expect(subject.starter?).not_to be_truthy
     end
@@ -147,8 +147,8 @@ describe Player do
 
   describe "Rating" do
     it "should change the ranking when a game is completed" do
-      game = FactoryGirl.build(:game, :challenged => subject)
-      game.complete!(:challenged_score => 21, :challenger_score => 15)
+      game = FactoryGirl.build(:game, challenged: subject)
+      game.complete!(challenged_score: 21, challenger_score: 15)
       expect {
         subject.send(:played, game)
       }.to change(subject, :rating)
@@ -157,15 +157,15 @@ describe Player do
 
   describe "Trends" do
     it "should calculate an improving trend" do
-      game = FactoryGirl.build(:game, :challenged => subject)
-      game.complete!(:challenged_score => 21, :challenger_score => 15)
+      game = FactoryGirl.build(:game, challenged: subject)
+      game.complete!(challenged_score: 21, challenger_score: 15)
 
       expect(subject.trend).to eq :up
     end
 
     it "should calculate a worsening trend" do
-      game = FactoryGirl.build(:game, :challenger => subject)
-      game.complete!(:challenged_score => 21, :challenger_score => 15)
+      game = FactoryGirl.build(:game, challenger: subject)
+      game.complete!(challenged_score: 21, challenger_score: 15)
 
       expect(subject.trend).to eq :down
     end

@@ -447,7 +447,7 @@
                       <td class="headerContent">
 
                         <!-- // Begin Module: Standard Header Image \\ -->
-                        <%= image_tag 'mail/latter.jpg', :style => 'max-width:600px;', :class => 'headerImage campaign-icon' %>
+                        <%= image_tag 'mail/latter.jpg', style: 'max-width:600px;', class: 'headerImage campaign-icon' %>
                         <!-- // End Module: Standard Header Image \\ -->
 
                       </td>
@@ -519,9 +519,9 @@
                           <tr>
                             <td colspan="2" align="center" valign="middle" id="social">
                               <div mc:edit="std_social">
-                                <%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) do %>
+                                <%= link_to confirmation_url(@resource, confirmation_token: @resource.confirmation_token) do %>
                                   <h2>Confirm Latter Account Now!</h2>
-                                  <small><%= confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+                                  <small><%= confirmation_url(@resource, confirmation_token: @resource.confirmation_token) %>
                                 <% end %>
 </a>                              </div>
                             </td>

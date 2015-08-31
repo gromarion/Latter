@@ -35,12 +35,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -82,7 +82,6 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "7cae54163e6a5feae4f00e676a581efe887a65fd55888d8ab93ac9e4f5571f04d67e5153e3c603a16dac57ad37f381859c548a8e6c776a6d1d813b213bb2eb37"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -96,7 +95,7 @@ Devise.setup do |config|
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed new email is stored in
   # unconfirmed email column, and copied to email column on successful confirmation.
-  #config.reconfirmable = true
+  # config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]
@@ -200,7 +199,11 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
   # config.omniauth :google_oauth2, "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", { }
-  config.omniauth :google_oauth2, ENV["GOOGLE_#{Rails.env.upcase}_CLIENT_ID"], ENV["GOOGLE_#{Rails.env.upcase}_CLIENT_SECRET"], { client_options: { ssl: { ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" } } }
+  config.omniauth :google_oauth2, ENV["GOOGLE_#{Rails.env.upcase}_CLIENT_ID"],
+    ENV["GOOGLE_#{Rails.env.upcase}_CLIENT_SECRET"],
+    client_options: { ssl: {
+      ca_path: "/usr/local/etc/openssl/certs", ca_file: "/usr/local/etc/openssl/certs/ca-bundle.crt" }
+    }
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

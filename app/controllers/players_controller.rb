@@ -4,9 +4,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player
-              .includes(:challenged_games, :challenger_games, :won_games)
-              .order('rating DESC')
+    @players = Player.includes(:challenged_games, :challenger_games, :won_games).order('rating DESC')
 
     respond_to do |format|
       format.html { render stream: true }
@@ -28,7 +26,6 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.json
   def show
-  
     @player = Player.find(params[:id])
 
     respond_to do |format|
@@ -75,7 +72,6 @@ class PlayersController < ApplicationController
     @player = current_player
 
     respond_to do |format|
-      
       if @player.update_attributes(player_params)
         format.html { redirect_to Player, notice: I18n.t('player.update.success') }
         format.json { head :no_content }
@@ -88,14 +84,13 @@ class PlayersController < ApplicationController
 
   private
 
-    def player_params
-      params.require(:player).permit(
-        :email,
-        :wants_challenge_completed_notifications,
-        :name,
-        :image_url,
-        :mention
-      )
-    end
-
+  def player_params
+    params.require(:player).permit(
+      :email,
+      :wants_challenge_completed_notifications,
+      :name,
+      :image_url,
+      :mention
+    )
+  end
 end

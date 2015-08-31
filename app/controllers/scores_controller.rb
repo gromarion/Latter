@@ -21,14 +21,14 @@ class ScoresController < ApplicationController
         format.json  { render template: 'games/show' }
       else
         format.html { redirect_to root_path, alert: I18n.t('game.complete.unsaved') }
-        format.js { render "new" }
+        format.js { render 'new' }
       end
     end
   end
 
   private
 
-    def score_params
-      params.require(:game).permit(:challenged_score, :challenger_score)
-    end
+  def score_params
+    params.require(:game).permit(:challenged_score, :challenger_score)
+  end
 end

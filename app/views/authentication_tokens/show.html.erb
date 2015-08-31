@@ -17,11 +17,11 @@
       </p>
 
       <p>
-        <%= link_to [current_player, :authentication_token], :method => :delete, :class => 'btn btn-danger', :confirm => I18n.t('authentication_token.delete.confirm') do %>
-        <%= content_tag :i, '', :class => 'icon-random' %>
+        <%= link_to [current_player, :authentication_token], method: :delete, class: 'btn btn-danger', confirm: I18n.t('authentication_token.delete.confirm') do %>
+        <%= content_tag :i, '', class: 'icon-random' %>
         Regenerate Token
         <% end %>
-        <%= link_to 'Cancel', root_path, :class => 'btn' %>
+        <%= link_to 'Cancel', root_path, class: 'btn' %>
       </p>
     </div>
   </div>

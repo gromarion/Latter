@@ -19,16 +19,14 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PagesController do
-
-
   describe "GET show" do
     it "renders the page when it exists" do
-      get :show, :slug => "rules"
+      get :show, slug: "rules"
       expect(response).to render_template "pages/rules"
     end
 
     it "responses with 404 when the page does not exist" do
-      get :show, :slug => "made-up"
+      get :show, slug: "made-up"
       expect(response.status).to be 404
     end
   end

@@ -34,8 +34,8 @@ describe PlayersHelper do
 
   describe "#distance_of_last_game_for" do
     it "should return the correct time representation of the last game" do
-      game = FactoryGirl.build(:game, :updated_at => DateTime.now - 1.hour, :challenged => @player)
-      game.complete!(:challenged_score => 21, :challenger_score => 15)
+      game = FactoryGirl.build(:game, updated_at: DateTime.now - 1.hour, challenged: @player)
+      game.complete!(challenged_score: 21, challenger_score: 15)
 
       expect(helper.distance_of_last_game_for(@player)).to match "about 1 hour"
     end

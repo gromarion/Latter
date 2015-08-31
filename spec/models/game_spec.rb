@@ -5,7 +5,6 @@ describe Game do
     FactoryGirl.build(:game)
   end
 
-
   it "should create a game given valid attributes" do
     subject.save
     expect(subject).to be_persisted
@@ -23,21 +22,21 @@ describe Game do
   it "should not create a game when an inverse one is already in progress" do
     subject.save
     expect {
-      FactoryGirl.create(:game, :challenged => subject.challenger, :challenger => subject.challenged)
+      FactoryGirl.create(:game, challenged: subject.challenger, challenger: subject.challenged)
     }.to raise_exception
   end
 
   it "should not create a game when an identical one is already is progress" do
     subject.save
-    new_game = FactoryGirl.build(:game, :challenger => subject.challenger, :challenged => subject.challenged)
+    new_game = FactoryGirl.build(:game, challenger: subject.challenger, challenged: subject.challenged)
     expect(new_game).not_to be_valid
     expect(new_game.errors[:base]).not_to be_empty
   end
 
   it "should allow saving the game once the previous game is complete" do
     subject.save
-    subject.complete!({challenged_score: 21, challenger_score: 10})
-    new_game = FactoryGirl.build(:game, :challenger => subject.challenger, :challenged => subject.challenged)
+    subject.complete!(challenged_score: 21, challenger_score: 10)
+    new_game = FactoryGirl.build(:game, challenger: subject.challenger, challenged: subject.challenged)
     expect(new_game).to be_valid
   end
 
@@ -77,7 +76,7 @@ describe Game do
     end
 
     it "should rollback correctly when the challenger won" do
-      subject.complete! :challenger_score => 21, :challenged_score => 15
+      subject.complete! challenger_score: 21, challenged_score: 15
       subject.rollback!
 
       @challenger.reload
@@ -87,7 +86,7 @@ describe Game do
     end
 
     it "should rollback correctly when the challenged won" do
-      subject.complete! :challenger_score => 15, :challenged_score => 21
+      subject.complete! challenger_score: 15, challenged_score: 21
       subject.rollback!
 
       @challenger.reload
@@ -151,6 +150,5 @@ describe Game do
       game.save! # This needs to be done to ensure that only one activity gets created
       expect { subject }.to change(PublicActivity::Activity, :count).by(1)
     end
-
   end
 end

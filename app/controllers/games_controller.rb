@@ -1,22 +1,20 @@
-
 class GamesController < ApplicationController
   respond_to :html, :js, :json
 
   # GET /games
   # GET /games.json
   def index
-    @games = Game\
-      .includes(:challenged, :challenger)\
-      .where(:complete => params.fetch(:complete, true))\
-      .order('created_at DESC')\
-      .page(params[:page])\
+    @games = Game.
+      includes(:challenged, :challenger).
+      where(complete: params.fetch(:complete, true)).
+      order('created_at DESC').
+      page(params[:page])
 
     respond_to do |format|
       format.html { render stream: true }
       format.json { render :index }
     end if stale?(last_modified: @games.maximum(:updated_at))
   end
-
 
   # POST /games
   # POST /games.json
@@ -30,7 +28,7 @@ class GamesController < ApplicationController
         format.js   { render }
         format.json { render :show, status: :created, location: @game }
       else
-        format.html { redirect_to root_path, :alert => I18n.t('game.new.failure') }
+        format.html { redirect_to root_path, alert: I18n.t('game.new.failure') }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +48,7 @@ class GamesController < ApplicationController
 
   private
 
-    def game_params
-      params.require(:game).permit(:challenged_id)
-    end
+  def game_params
+    params.require(:game).permit(:challenged_id)
+  end
 end

@@ -11,8 +11,7 @@ Latter::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_files = true
-  config.static_cache_control = "public, max-age=3600"
-
+  config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -32,15 +31,15 @@ Latter::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => 'latter.dev' }
-  config.action_mailer.asset_host = "http://localhost:3000"
+  config.action_mailer.default_url_options = { host: 'latter.dev' }
+  config.action_mailer.asset_host = 'http://localhost:3000'
 
   config.i18n.default_locale = :en
 
-  #config.action_mailer.delivery_method = :smtp
-  #config.action_mailer.smtp_settings = {
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
   #  :address => 'localhost',
   #  :port => 1025,
   #  :domain => 'Latter.dev'
-  #}
+  # }
 end

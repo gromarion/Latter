@@ -1,3 +1,3 @@
 json.player do
-  json.partial! "player", :player => @player
+  json.partial! "player", player: @player
 end

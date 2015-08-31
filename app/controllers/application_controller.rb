@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   # Public: Override default_url_options to automatically mixin the current
   # locale. This ensures that links always have the correct locale set,
   # regardless of whether the actual link_to has it or not.
-  def default_url_options(options = {})
+  def default_url_options
     { locale: I18n.locale }
   end
 
