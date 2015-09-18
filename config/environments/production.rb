@@ -81,11 +81,14 @@ Latter::Application.configure do
     ::HIPCHAT_CLIENT = HipChat::Client.new(hipchat_config.token, api_version: 'v2')
     ::PING_PONG_ROOM_NAME = hipchat_config.ping_pong_room_name
 
-    pingpously_config = AppConfiguration.for(:pingpously)
-    ::NEMESIS_REQUIRED_WON_GAMES = pingpously_config.nemesis_required_won_games
-    ::LEVEL_1_MAX_POINTS = pingpously_config.level_1_max_points
-    ::LEVEL_2_MAX_POINTS = pingpously_config.level_2_max_points
-    ::LEVEL_3_MAX_POINTS = pingpously_config.level_3_max_points
-    ::LEVEL_4_MAX_POINTS = pingpously_config.level_4_max_points
+    pingpously_config = AppConfiguration.for(:pingpously_config)
+    ::NEMESIS_REQUIRED_WON_GAMES = pingpously_config.nemesis_required_won_games.to_i
+    ::LEVEL_1_MAX_POINTS = pingpously_config.level_1_max_points.to_i
+    ::LEVEL_2_MAX_POINTS = pingpously_config.level_2_max_points.to_i
+    ::LEVEL_3_MAX_POINTS = pingpously_config.level_3_max_points.to_i
+    ::LEVEL_4_MAX_POINTS = pingpously_config.level_4_max_points.to_i
+    notify_players_individually = pingpously_config.notify_players_individually
+    ::NOTIFY_PLAYERS_INDIVIDUALLY = true if notify_players_individually =~ (/^(true|t|yes|y|1)$/i)
+    ::NOTIFY_PLAYERS_INDIVIDUALLY = false if notify_players_individually =~ (/^(false|f|no|n|0)$/i)
   end
 end
