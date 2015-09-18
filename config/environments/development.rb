@@ -44,5 +44,8 @@ Latter::Application.configure do
     ::LEVEL_2_MAX_POINTS = pingpously_config.level_2_max_points.to_i
     ::LEVEL_3_MAX_POINTS = pingpously_config.level_3_max_points.to_i
     ::LEVEL_4_MAX_POINTS = pingpously_config.level_4_max_points.to_i
+    notify_players_individually = pingpously_config.notify_players_individually
+    ::NOTIFY_PLAYERS_INDIVIDUALLY = true if notify_players_individually =~ (/^(true|t|yes|y|1)$/i)
+    ::NOTIFY_PLAYERS_INDIVIDUALLY = false if notify_players_individually =~ (/^(false|f|no|n|0)$/i)
   end
 end

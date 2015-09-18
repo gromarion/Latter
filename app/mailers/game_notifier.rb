@@ -4,10 +4,10 @@ class GameNotifier
       "PingPously: You have been challenged by #{game.challenger.name} (pingpong)"
     )
     room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
-    challenged_mention = fetch_hipchat_mention(game.challenged, room)
-    challenger_mention = fetch_hipchat_mention(game.challenger, room)
+    challenged_name = fetch_player_or_mention_name(game.challenged, room)
+    challenger_name = fetch_player_or_mention_name(game.challenger, room)
     if challenged_mention && challenger_mention
-      send_to_room(room, "@#{challenger_mention} has challenged @#{challenged_mention} to play (pingpong)!")
+      send_to_room(room, "#{challenger_name} has challenged #{challenged_name} to play (pingpong)!")
     end
   end
 
@@ -15,21 +15,16 @@ class GameNotifier
     winner = Player.find(game.winner_id)
     loser = fetch_looser(game)
     room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
-    winner_mention = fetch_hipchat_mention(winner, room)
-    loser_mention = fetch_hipchat_mention(loser, room)
+    winner_name = fetch_player_or_mention_name(winner, room)
+    loser_name = fetch_player_or_mention_name(loser, room)
     defeated = fetch_defeated_word(game)
     if winner_mention && loser_mention
       send_to_room(
         HIPCHAT_CLIENT[PING_PONG_ROOM_NAME],
-        "@#{winner_mention} #{defeated} @#{loser_mention} #{game.final_score}"
+        "#{winner_name} #{defeated} #{loser_name} #{game.final_score}"
       )
     end
-    HIPCHAT_CLIENT.user(loser.email).send(
-      "PingPously: You have been #{defeated} by #{winner.name} #{game.final_score}"
-    )
-    HIPCHAT_CLIENT.user(winner.email).send(
-      "PingPously: You have #{defeated} #{loser.name} #{game.final_score}"
-    )
+    notify_players_individually(winner, loser)
   end
 
   def self.show_off(player)
@@ -41,6 +36,21 @@ class GameNotifier
   end
 
   private
+
+  def notify_players_individually(winner, loser)
+    return unless NOTIFY_PLAYERS_INDIVIDUALLY
+    HIPCHAT_CLIENT.user(loser.email).send(
+      "PingPously: You have been #{defeated} by #{winner.name} #{game.final_score}"
+    )
+    HIPCHAT_CLIENT.user(winner.email).send(
+      "PingPously: You have #{defeated} #{loser.name} #{game.final_score}"
+    )
+  end
+
+  def fetch_player_or_mention_name(player, room)
+    mention = fetch_hipchat_mention(player, room)
+    mention ? "@#{mention}" : player.name
+  end
 
   def self.fetch_hipchat_mention(player, room)
     return player.mention if player.mention
