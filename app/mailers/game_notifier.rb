@@ -1,9 +1,11 @@
 class GameNotifier
   class << self
     def notify_challenged(game)
-      HIPCHAT_CLIENT.user(game.challenged.email).send(
-        "PingPously: You have been challenged by #{game.challenger.name} (pingpong)"
-      )
+      if NOTIFY_PLAYERS_INDIVIDUALLY
+        HIPCHAT_CLIENT.user(game.challenged.email).send(
+          "PingPously: You have been challenged by #{game.challenger.name} (pingpong)"
+        )
+      end
       room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
       challenged_name = fetch_player_or_mention_name(game.challenged, room)
       challenger_name = fetch_player_or_mention_name(game.challenger, room)
