@@ -19,7 +19,7 @@ class GameNotifier
       winner_name = fetch_player_or_mention_name(winner, room)
       loser_name = fetch_player_or_mention_name(loser, room)
       defeated = fetch_defeated_word(game)
-      if winner_mention && loser_mention
+      if winner_name && loser_name
         send_to_room(
           HIPCHAT_CLIENT[PING_PONG_ROOM_NAME],
           "#{winner_name} #{defeated} #{loser_name} #{game.final_score}"
