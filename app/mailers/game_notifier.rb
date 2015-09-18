@@ -7,7 +7,7 @@ class GameNotifier
       room = HIPCHAT_CLIENT[PING_PONG_ROOM_NAME]
       challenged_name = fetch_player_or_mention_name(game.challenged, room)
       challenger_name = fetch_player_or_mention_name(game.challenger, room)
-      if challenged_mention && challenger_mention
+      if challenged_name && challenger_name
         send_to_room(room, "#{challenger_name} has challenged #{challenged_name} to play (pingpong)!")
       end
     end
