@@ -75,5 +75,10 @@ class GameNotifier
         "PingPously: You have #{defeated} #{loser.name} #{game.final_score}"
       )
     end
+
+    def fetch_player_or_mention_name(player, room)
+      mention = fetch_hipchat_mention(player, room)
+      mention ? "@#{mention}" : player.name
+    end
   end
 end
