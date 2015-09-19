@@ -310,7 +310,10 @@ class Game < ActiveRecord::Base
   end
 
   def valid_scores
-    [winner_score, loser_score].all? { |score| score >= 11 } if winner_score && loser_score
+    return true unless winner_score && loser_score
+    valid = [winner_score, loser_score].any? { |score| score >= 11 }
+    errors.add(:score, 'Must be greater or equal than 11') unless valid
+    valid
   end
 
   # Private - Ensures that the challenger is not challenging themselves to boost their
@@ -319,12 +322,10 @@ class Game < ActiveRecord::Base
   # Adds an error message if the challenger and challenged is the same,
   # returns boolean flag indicating whether the validation passed or failed.
   def challenger_and_challenged_are_not_the_same
-    if challenger == challenged
-      errors.add(:challenger, :same_as_challenged)
-      return false
-    else
-      return true
-    end
+    return true unless challenger == challenged
+
+    errors.add(:challenger, :same_as_challenged)
+    false
   end
 
   # Private - Checks for the existence of an inverse game
