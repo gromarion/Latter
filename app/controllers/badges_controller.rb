@@ -4,7 +4,7 @@ class BadgesController < ApplicationController
 
   def index
     @badges = Badge.all
-    @badges = @badges.sort { |x, y| x.name <=> y.name }
+    @badges = @badges.sort { |x, y| BADGES_ORDER.index(x.name) <=> BADGES_ORDER.index(y.name) }
     render stream: true
   end
 
